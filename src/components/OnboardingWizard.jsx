@@ -1,10 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { calculateArrivalDate, calculateCurrentWeek } from '../utils/pregnancy'
+
+const LOADING_STEPS = [
+  { text: "Analyzing your Last Menstrual Period...", icon: "📅" },
+  { text: "Applying Naegele's Rule for calculation...", icon: "🧮" },
+  { text: "Determining Estimated Due Date (EDD)...", icon: "⏳" },
+  { text: "Tailoring weekly baby growth comparisons...", icon: "🍓" },
+  { text: "Configuring customized checklist templates...", icon: "📋" },
+  { text: "Almost ready! Preparing dashboard...", icon: "✨" }
+]
 
 export default function OnboardingWizard({ onComplete }) {
   const [step, setStep] = useState(1)
   const [periodDate, setPeriodDate] = useState('')
   const [error, setError] = useState('')
+  const [currentStepIndex, setCurrentStepIndex] = useState(0)
+  const [isTransitioning, setIsTransitioning] = useState(false)
 
   const handleNext = () => {
     if (step === 2 && !periodDate) {
@@ -12,8 +23,38 @@ export default function OnboardingWizard({ onComplete }) {
       return
     }
     setError('')
-    setStep((prev) => prev + 1)
+    if (step === 2) {
+      setStep('loading')
+    } else {
+      setStep((prev) => prev + 1)
+    }
   }
+
+  useEffect(() => {
+    if (step !== 'loading') return
+
+    setCurrentStepIndex(0)
+    setIsTransitioning(false)
+
+    let index = 0
+    const interval = setInterval(() => {
+      // Start exit animation (blur + fade out) 200ms before text changes
+      setIsTransitioning(true)
+
+      setTimeout(() => {
+        index++
+        if (index < LOADING_STEPS.length) {
+          setCurrentStepIndex(index)
+          setIsTransitioning(false)
+        } else {
+          clearInterval(interval)
+          setStep(3)
+        }
+      }, 200)
+    }, 800) // Total 800ms per step (600ms stable + 200ms transition)
+
+    return () => clearInterval(interval)
+  }, [step])
 
   const handleBack = () => {
     setError('')
@@ -43,9 +84,9 @@ export default function OnboardingWizard({ onComplete }) {
     <div className="card w-full bg-white shadow-xl border border-gray-100 p-6 max-w-md mx-auto">
       {/* Progress Steps Tracker */}
       <ul className="steps steps-horizontal w-full mb-8 text-xs font-semibold">
-        <li className={`step ${step >= 1 ? 'step-primary' : ''}`}>Welcome</li>
-        <li className={`step ${step >= 2 ? 'step-primary' : ''}`}>Your Info</li>
-        <li className={`step ${step >= 3 ? 'step-primary' : ''}`}>Summary</li>
+        <li className={`step ${step >= 1 ? 'step-secondary' : ''}`}>Welcome</li>
+        <li className={`step ${step >= 2 || step === 'loading' ? 'step-secondary' : ''}`}>Your Info</li>
+        <li className={`step ${step >= 3 ? 'step-secondary' : ''}`}>Summary</li>
       </ul>
 
       {/* Step 1: Welcome & Setup */}
@@ -91,6 +132,41 @@ export default function OnboardingWizard({ onComplete }) {
             <button onClick={handleBack} className="btn btn-ghost flex-1 h-12 min-h-[48px]">Back</button>
             <button onClick={handleNext} className="btn btn-primary flex-1 h-12 min-h-[48px]">Calculate Due Date ➔</button>
           </div>
+        </div>
+      )}
+
+      {/* Step: Loading */}
+      {step === 'loading' && (
+        <div className="flex flex-col items-center text-center gap-6 py-4">
+          <h2 className="text-xl font-bold text-primary">Calculating your timeline...</h2>
+          
+          <div className="relative w-20 h-20 flex items-center justify-center">
+            {/* Pink/Rose pregnancy wheel spinner */}
+            <div className="absolute w-20 h-20 border-4 border-pink-100 border-t-pink-400 rounded-full animate-spin"></div>
+            
+            {/* Animating center icon */}
+            <span 
+              className={`text-3xl transition-all duration-200 transform ${
+                isTransitioning ? 'opacity-0 blur-sm scale-95' : 'opacity-100 blur-0 scale-100'
+              }`}
+            >
+              {LOADING_STEPS[currentStepIndex].icon}
+            </span>
+          </div>
+
+          <div className="min-h-[48px] flex items-center justify-center">
+            <p 
+              className={`text-sm font-semibold text-neutral transition-all duration-200 ${
+                isTransitioning ? 'opacity-0 blur-sm' : 'opacity-100 blur-0'
+              }`}
+            >
+              {LOADING_STEPS[currentStepIndex].text}
+            </p>
+          </div>
+          
+          <p className="text-xs text-neutral/60 italic">
+            Setting up needed items for a smooth pregnancy journey...
+          </p>
         </div>
       )}
 
