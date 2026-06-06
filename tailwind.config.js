@@ -9,15 +9,20 @@ export default {
     themes: [
       {
         bumpbuddy: {
-          primary: "#7970c3",      // Soft Lavender (Dominant Brand Color)
-          secondary: "#ffacda",    // Soft Pink (Secondary / Highlights / Warm CTAs)
-          accent: "#a8e6cf",       // Mint Green (Checklist success states, badges)
-          neutral: "#3d4451",      // Slate Grey for readable text
-          "base-100": "#faf8f6",   // Warm off-white background
-          info: "#7970c3",
-          success: "#a8e6cf",
-          warning: "#f3cc30",
-          error: "#e58b8b",
+          primary: "#6d64ad",              // Calming Cozy Lavender (Dominant Brand Color)
+          "primary-content": "#ffffff",    // Clear white text on primary backgrounds
+          secondary: "#ebb0c9",            // Cozy Blush (Secondary Highlights)
+          "secondary-content": "#2b2738",  // Cozy Charcoal text on blush backgrounds
+          accent: "#92c2a0",               // Muted Sage Green (Checklists & Success badges)
+          "accent-content": "#2b2738",     // Cozy Charcoal text on sage backgrounds
+          neutral: "#2b2738",              // Deep Cozy Charcoal for neutral texts
+          "neutral-content": "#faf7f2",    // Warm linen text on dark containers
+          "base-100": "#faf7f2",           // Warm Linen Off-White background
+          "base-content": "#2b2738",       // Cozy Charcoal text on linen background
+          info: "#6d64ad",
+          success: "#92c2a0",
+          warning: "#dfaf50",              // Muted Warm Gold
+          error: "#c97f7f",                // Muted Soft Rose-Red
         },
       },
     ],

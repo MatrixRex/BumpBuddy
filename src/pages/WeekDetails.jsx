@@ -99,7 +99,7 @@ export default function WeekDetails() {
       )}
 
       {/* Size Card Display */}
-      <div className="card bg-gradient-to-br from-primary to-[#938ce0] text-white p-6 shadow-md rounded-2xl relative overflow-hidden">
+      <div className="card bg-gradient-to-br from-primary to-primary/80 text-white p-6 shadow-md rounded-2xl relative overflow-hidden">
         <div className="absolute right-4 bottom-4 text-5xl opacity-20">🤰</div>
         <span className="text-xs uppercase tracking-wider font-semibold opacity-90">Baby's growth guide</span>
         <h2 className="text-2xl font-black mt-1">Size of a {weekData.sizeComparison}</h2>
@@ -119,7 +119,7 @@ export default function WeekDetails() {
       </div>
 
       {/* Health Tip Box */}
-      <div className="card bg-[#fff5fa] border-l-4 border-secondary p-4 rounded-r-2xl rounded-l-none shadow-sm">
+      <div className="card bg-secondary/15 border-l-4 border-secondary p-4 rounded-r-2xl rounded-l-none shadow-sm">
         <h4 className="text-xs uppercase font-extrabold text-secondary tracking-wider">💡 Tip for this week</h4>
         <p className="text-sm text-neutral mt-1 leading-relaxed">
           {weekData.healthTip}
