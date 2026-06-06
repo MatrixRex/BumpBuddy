@@ -53,17 +53,13 @@ export default function OnboardingWizard({ onComplete }) {
         <div className="flex flex-col gap-4 text-center">
           <h2 className="text-2xl font-bold text-primary">Welcome to Bump Buddy!</h2>
           <p className="text-sm text-neutral leading-relaxed">
-            We're so excited to help you track your pregnancy journey. Bump Buddy lets you look up weekly growth guides, keep a personalized checklist, and check development highlights.
+            A simple way to look up weekly growth guides, track highlights, and manage your checklist without an account.
           </p>
-          <div className="bg-primary/5 rounded-xl p-4 text-left border border-primary/10">
-            <h3 className="text-sm font-semibold text-primary mb-1">🔒 Completely Private</h3>
-            <p className="text-xs text-neutral">No logins, accounts, or sharing required. All your information stays stored securely on your own device.</p>
-          </div>
           <button 
             onClick={handleNext}
             className="btn btn-primary w-full mt-4 h-12 min-h-[48px]"
           >
-            Get Started
+            Calculate My Due Date ➔
           </button>
         </div>
       )}
@@ -71,13 +67,13 @@ export default function OnboardingWizard({ onComplete }) {
       {/* Step 2: Date Input */}
       {step === 2 && (
         <div className="flex flex-col gap-4">
-          <h2 className="text-xl font-bold text-primary text-center">Let's find your due date</h2>
+          <h2 className="text-xl font-bold text-primary text-center">When was the start of your last period?</h2>
           <p className="text-sm text-neutral text-center leading-relaxed">
-            When did the first day of your last period start? We'll use this date to follow your pregnancy week-by-week.
+            We'll use your Last Menstrual Period (LMP) to calculate your estimated due date and tailor your weekly guides.
           </p>
           <div className="form-control w-full mt-2">
             <label className="label font-bold text-xs uppercase tracking-wide text-neutral">
-              Start Date of Last Period
+              Last Menstrual Period (LMP) Start Date
             </label>
             <input 
               type="date" 
@@ -93,7 +89,7 @@ export default function OnboardingWizard({ onComplete }) {
           </div>
           <div className="flex justify-between gap-4 mt-6">
             <button onClick={handleBack} className="btn btn-ghost flex-1 h-12 min-h-[48px]">Back</button>
-            <button onClick={handleNext} className="btn btn-primary flex-1 h-12 min-h-[48px]">Next</button>
+            <button onClick={handleNext} className="btn btn-primary flex-1 h-12 min-h-[48px]">Calculate Due Date ➔</button>
           </div>
         </div>
       )}
@@ -101,8 +97,8 @@ export default function OnboardingWizard({ onComplete }) {
       {/* Step 3: Result Summary & Save */}
       {step === 3 && (
         <div className="flex flex-col gap-4 text-center">
-          <h2 className="text-2xl font-bold text-primary">All set! 🎉</h2>
-          <p className="text-sm text-neutral">Here is your calculated arrival date:</p>
+          <h2 className="text-2xl font-bold text-primary">Your pregnancy tracker is ready!</h2>
+          <p className="text-sm text-neutral">Based on your LMP, here is your estimated timeline:</p>
           
           <div className="bg-base-100 border-2 border-secondary/40 rounded-2xl p-5 my-2 flex flex-col gap-3">
             <div>
@@ -119,7 +115,7 @@ export default function OnboardingWizard({ onComplete }) {
           <p className="text-xs text-neutral italic">Ready to begin tracking your journey?</p>
           <div className="flex justify-between gap-4 mt-4">
             <button onClick={handleBack} className="btn btn-ghost flex-1 h-12 min-h-[48px]">Back</button>
-            <button onClick={handleFinish} className="btn btn-primary flex-1 h-12 min-h-[48px]">Let's Go! ➔</button>
+            <button onClick={handleFinish} className="btn btn-primary flex-1 h-12 min-h-[48px]">Open My Pregnancy Dashboard ➔</button>
           </div>
         </div>
       )}

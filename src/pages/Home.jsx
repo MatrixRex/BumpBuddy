@@ -62,7 +62,7 @@ export default function Home() {
         <div className="text-center max-w-md mb-8 mt-4">
           <h1 className="text-4xl font-extrabold text-primary mb-2">👶 Bump Buddy</h1>
           <p className="text-neutral text-sm leading-relaxed">
-            Your simple, private, loginless pregnancy guide.
+            Your simple pregnancy guide.
           </p>
         </div>
         <OnboardingWizard onComplete={handleOnboardingComplete} />
@@ -75,8 +75,8 @@ export default function Home() {
     <div className="flex flex-col gap-6 max-w-md mx-auto py-6 px-4">
       {/* Welcome Back Card */}
       <div className="card w-full bg-white shadow-lg border border-gray-100 p-6 flex flex-col gap-4 text-center">
-        <h2 className="text-2xl font-bold text-primary">Welcome Back! ✨</h2>
-        <p className="text-sm text-neutral">Here is your current pregnancy summary:</p>
+        <h2 className="text-2xl font-bold text-primary">Welcome back to Bump Buddy</h2>
+        <p className="text-sm text-neutral">Here's where you stand in your pregnancy today:</p>
 
         {/* Active Week Summary Card */}
         {activeWeekData && (
@@ -88,9 +88,9 @@ export default function Home() {
               </span>
             </div>
             <div>
-              <h3 className="text-xs uppercase font-bold text-neutral/70 tracking-wider">Baby's Current Size</h3>
+              <h3 className="text-xs uppercase font-bold text-neutral/70 tracking-wider">Your Baby's Size</h3>
               <p className="text-sm text-neutral mt-0.5">
-                Your baby is currently about the size of a <b>{activeWeekData.sizeComparison}</b>.
+                Your baby is about the size of a <b>{activeWeekData.sizeComparison}</b> this week.
               </p>
             </div>
             <div className="border-t border-dashed border-primary/20 pt-3">
@@ -115,14 +115,14 @@ export default function Home() {
             to={`/week/${currentWeekNum()}`}
             className="btn btn-primary w-full h-12 min-h-[48px] text-white font-bold"
           >
-            See details & checklist for this week ➔
+            View Weekly Details ➔
           </Link>
 
           <button 
             onClick={handleReset}
             className="btn btn-outline btn-ghost w-full h-12 min-h-[48px] text-xs font-semibold text-gray-500 hover:text-error hover:bg-error/10 hover:border-error"
           >
-            Reset Tracker / Clear Memory 🗑️
+            Clear tracker and start over
           </button>
         </div>
       </div>

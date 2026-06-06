@@ -70,7 +70,7 @@ export default function WeekDetails() {
             ◀ Week 1
           </button>
         )}
-        <span className="font-extrabold text-sm text-primary">Week {weekData.weekNumber} of 40</span>
+        <span className="font-extrabold text-sm text-primary">Week {weekData.weekNumber} Guide</span>
         {currentWeekIdx < 40 ? (
           <Link 
             to={`/week/${currentWeekIdx + 1}`}
@@ -103,13 +103,13 @@ export default function WeekDetails() {
         <div className="absolute right-4 bottom-4 text-5xl opacity-20">🤰</div>
         <span className="text-xs uppercase tracking-wider font-semibold opacity-90">Baby's growth guide</span>
         <h2 className="text-2xl font-black mt-1">Size of a {weekData.sizeComparison}</h2>
-        <p className="text-xs mt-2 opacity-80 italic">A beautiful milestone in your development journey.</p>
+        <p className="text-xs mt-2 opacity-80 italic">Your baby is growing fast. Here's what's happening:</p>
       </div>
 
       {/* Development Highlights */}
       <div className="card bg-white p-5 shadow-md border border-gray-50 rounded-2xl">
         <h3 className="text-base font-extrabold text-primary flex items-center gap-2">
-          ✨ Highlights
+          ✨ Weekly Highlights
         </h3>
         <ul className="list-disc list-inside text-sm text-neutral mt-3 flex flex-col gap-2 leading-relaxed">
           {weekData.highlights.map((highlight, idx) => (
@@ -120,7 +120,7 @@ export default function WeekDetails() {
 
       {/* Health Tip Box */}
       <div className="card bg-secondary/15 border-l-4 border-secondary p-4 rounded-r-2xl rounded-l-none shadow-sm">
-        <h4 className="text-xs uppercase font-extrabold text-secondary tracking-wider">💡 Tip for this week</h4>
+        <h4 className="text-xs uppercase font-extrabold text-secondary tracking-wider">💡 Healthy Tip of the Week</h4>
         <p className="text-sm text-neutral mt-1 leading-relaxed">
           {weekData.healthTip}
         </p>
@@ -129,7 +129,7 @@ export default function WeekDetails() {
       {/* Persistent To-Do Checklist */}
       <div className="card bg-white p-5 shadow-md border border-gray-50 rounded-2xl">
         <h3 className="text-base font-extrabold text-primary mb-3">
-          ✅ To-Do Checklist
+          ✅ Your Weekly Checklist
         </h3>
         <div className="flex flex-col gap-1">
           {weekData.checklist.map((task, idx) => {
@@ -156,7 +156,7 @@ export default function WeekDetails() {
 
       {/* Dashboard Return Button */}
       <Link to="/" className="btn btn-outline btn-ghost w-full h-12 min-h-[48px] mt-2">
-        ◀ Back to Dashboard
+        ◀ Return to Dashboard
       </Link>
     </div>
   )
