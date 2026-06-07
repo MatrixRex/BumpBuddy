@@ -26,7 +26,7 @@ export default function App() {
 
   return (
     <Router basename={import.meta.env.BASE_URL}>
-      <div className="flex flex-col min-h-screen bg-[#faf7f2] relative overflow-x-hidden">
+      <div className="flex flex-col min-h-screen relative overflow-x-hidden">
         {/* Navigation Header */}
         <header className="w-full sticky top-0 z-50 bg-[#ffffff]/90 backdrop-blur-md border-b border-[#f2edd6]/80 shadow-sm transition-all duration-300">
           <div className="navbar max-w-6xl mx-auto w-full px-4 md:px-6 py-2">
