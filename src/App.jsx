@@ -44,11 +44,17 @@ function AppContent() {
       {/* Navigation Header */}
       <header className="w-full sticky top-0 z-50 bg-[#ffffff]/90 backdrop-blur-md border-b border-[#f2edd6]/80 shadow-sm transition-all duration-300">
         <div className="navbar max-w-6xl mx-auto w-full px-4 md:px-6 py-2 flex items-center justify-between">
-          <div className="flex-1 flex items-center gap-2">
+          <div className="flex-1 flex items-center gap-2 md:gap-3">
+            <Link to="/" className="text-2xl font-display font-black tracking-tight text-primary flex items-center gap-1.5 min-h-[48px] px-2 rounded-xl hover:bg-[#faf7f2]/50 transition-colors">
+              👶 Bump Buddy
+            </Link>
+            
+            <span className="text-neutral/20 font-bold">/</span>
+            
             {isWeekPage ? (
               <div className="flex items-center gap-2 text-sm md:text-base font-semibold">
                 <Link to="/" className="text-neutral/50 hover:text-primary transition-colors font-display font-bold">
-                  Home
+                  Dashboard
                 </Link>
                 <span className="text-neutral/30 font-bold">/</span>
                 <span className="font-display font-black text-primary">
@@ -56,22 +62,13 @@ function AppContent() {
                 </span>
               </div>
             ) : (
-              <Link to="/" className="text-2xl font-display font-black tracking-tight text-primary flex items-center gap-1.5 min-h-[48px] px-2 rounded-xl hover:bg-[#faf7f2]/50 transition-colors">
-                👶 Bump Buddy
-              </Link>
+              <span className="text-sm font-display font-black text-neutral/50">
+                Dashboard
+              </span>
             )}
           </div>
           
           <div className="flex-none flex items-center gap-3">
-            {currentWeek !== null && !isWeekPage && (
-              <Link 
-                to={`/week/${currentWeek}`} 
-                className="badge badge-primary font-bold text-xs p-3.5 hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer min-h-[30px] shadow-sm rounded-full text-white"
-              >
-                Go to Week {currentWeek}
-              </Link>
-            )}
-            
             {/* Settings Gear Button */}
             <button 
               onClick={() => setIsSettingsOpen(true)}
