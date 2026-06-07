@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import weeksData from '../data/weeks.json'
 import { getPersistedLMP, calculateCurrentWeek, calculateArrivalDate } from '../utils/pregnancy'
+import Icon from '../components/Icon'
+
 
 export default function Timeline() {
   const [currentWeek, setCurrentWeek] = useState(null)
@@ -47,8 +49,8 @@ export default function Timeline() {
       {/* Page Header Card */}
       <div className="notebook-card p-6 md:p-8 bg-white border border-[#f2edd6]/80 flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <span className="text-[10px] font-extrabold uppercase tracking-widest text-primary bg-primary/10 px-3 py-1 rounded-full">
-            📖 Scrapbook Timeline
+          <span className="text-[10px] font-extrabold uppercase tracking-widest text-primary bg-primary/10 px-3 py-1 rounded-full inline-flex items-center gap-1.5">
+            <Icon name="book" size={12} className="text-primary" /> Scrapbook Timeline
           </span>
           <h1 className="text-3xl font-display font-black text-primary mt-3 leading-none">Your 40-Week Journey</h1>
           <p className="text-xs text-neutral/60 mt-2 font-bold max-w-xl leading-relaxed">
@@ -70,9 +72,9 @@ export default function Timeline() {
             )}
             <button 
               onClick={scrollToCurrentWeek}
-              className="custom-btn-primary btn-xs mt-1 px-3 py-1 text-[10px] h-7 font-bold rounded-lg shadow-sm flex items-center gap-1"
+              className="custom-btn-primary btn-xs mt-1 px-3 py-1 text-[10px] h-7 font-bold rounded-lg shadow-sm flex items-center gap-1.5"
             >
-              📍 Center Active Week
+              <Icon name="mapPin" size={12} className="text-white" /> Center Active Week
             </button>
           </div>
         )}
@@ -105,13 +107,13 @@ export default function Timeline() {
 
             // Define trimester headers to insert
             if (wNum === 1) {
-              trimesterTitle = "🌸 Trimester 1: Early Beginnings (Weeks 1 - 13)"
+              trimesterTitle = "Trimester 1: Early Beginnings (Weeks 1 - 13)"
               trimesterBadgeStyle = "bg-primary/10 border-primary/20 text-primary"
             } else if (wNum === 14) {
-              trimesterTitle = "🌸 Trimester 2: The Golden Period (Weeks 14 - 27)"
+              trimesterTitle = "Trimester 2: The Golden Period (Weeks 14 - 27)"
               trimesterBadgeStyle = "bg-[#ebb0c9]/15 border-[#ebb0c9]/30 text-[#b26989]"
             } else if (wNum === 28) {
-              trimesterTitle = "🌸 Trimester 3: The Final Stretch (Weeks 28 - 40)"
+              trimesterTitle = "Trimester 3: The Final Stretch (Weeks 28 - 40)"
               trimesterBadgeStyle = "bg-[#92c2a0]/15 border-[#92c2a0]/30 text-[#5c8266]"
             }
 
@@ -161,7 +163,8 @@ export default function Timeline() {
                 {/* Trimester section divider */}
                 {trimesterTitle && (
                   <li className="my-6 flex justify-center w-full">
-                    <div className={`badge border py-3.5 px-6 text-xs font-bold shadow-sm rounded-full ${trimesterBadgeStyle}`}>
+                    <div className={`badge border py-3.5 px-6 text-xs font-bold shadow-sm rounded-full flex items-center gap-1.5 ${trimesterBadgeStyle}`}>
+                      <Icon name="flower" size={14} className="shrink-0" />
                       {trimesterTitle}
                     </div>
                   </li>
