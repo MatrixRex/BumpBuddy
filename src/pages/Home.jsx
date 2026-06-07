@@ -104,15 +104,7 @@ export default function Home() {
   // Onboarding view for new users
   if (!lmp) {
     return (
-      <div className="flex flex-col items-center justify-center py-6 px-4">
-        <div className="text-center max-w-md mb-8 mt-4">
-          <h1 className="text-4xl font-display font-black text-primary mb-2 flex items-center justify-center gap-2">
-            <Icon name="baby" size={36} className="text-primary" /> Bump Buddy
-          </h1>
-          <p className="text-neutral/70 text-sm leading-relaxed font-bold">
-            Your cozy, private pregnancy tracker companion.
-          </p>
-        </div>
+      <div className="flex flex-col items-center justify-center py-6 md:py-12 px-4 min-h-[75vh]">
         <OnboardingWizard onComplete={handleOnboardingComplete} />
       </div>
     )

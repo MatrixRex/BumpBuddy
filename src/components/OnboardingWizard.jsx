@@ -83,41 +83,27 @@ export default function OnboardingWizard({ onComplete }) {
   }
 
   return (
-    <div className="w-full max-w-md lg:max-w-4xl mx-auto notebook-card overflow-hidden transition-all duration-300 relative z-10 border border-[#f2edd6]/80 bg-white">
+    <div className="w-full max-w-md lg:max-w-5xl mx-auto notebook-card overflow-hidden transition-all duration-300 relative z-10 border border-[#f2edd6]/80 bg-white">
       <div className="grid grid-cols-1 lg:grid-cols-12">
         {/* Left Side Presentation Panel (Desktop only) */}
-        <div className="hidden lg:flex lg:col-span-5 bg-gradient-to-br from-primary/5 to-secondary/5 text-neutral p-8 flex-col justify-between relative overflow-hidden border-r border-[#f2edd6]/60">
-          <div className="z-10">
-            <span className="text-xs uppercase font-extrabold tracking-widest text-primary bg-primary/10 px-3 py-1.5 rounded-full inline-flex items-center gap-1.5">
-              <Icon name="flower" size={14} className="text-primary" /> Your Companion
-            </span>
-            <h2 className="text-3xl font-display font-black mt-5 leading-tight text-primary">Bump Buddy</h2>
-            <p className="text-sm text-neutral/75 mt-2 leading-relaxed font-semibold">
-              Track your pregnancy journey with ease, warmth, and complete privacy.
-            </p>
-          </div>
+        <div className="hidden lg:flex lg:col-span-5 bg-gradient-to-br from-primary/5 to-secondary/5 p-8 flex-col justify-center items-center relative overflow-hidden border-r border-[#f2edd6]/60">
           
           {/* Big Polaroid Image Frame */}
-          <div className="my-8 z-10 flex justify-center items-center">
-            <div className="polaroid-frame -rotate-2">
+          <div className="z-10 flex justify-center items-center w-full">
+            <div className="polaroid-frame -rotate-1 w-full max-w-[340px] shadow-md">
               <img 
                 src={cozyPregnancyHero} 
                 alt="Cozy parenting scene" 
-                className="w-full max-w-[210px] h-auto object-contain rounded-lg border border-[#f2edd6]/40 bg-[#faf7f2]/20"
+                className="w-full h-auto object-contain rounded-lg border border-[#f2edd6]/40 bg-[#faf7f2]/20"
               />
-              <div className="polaroid-caption mt-3">Cozy nursery moments</div>
+              <div className="polaroid-caption mt-4 font-handwritten text-3xl text-primary">Cozy nursery moments</div>
             </div>
           </div>
           
-          <div className="z-10 pt-4 border-t border-[#f2edd6]/80">
-            <p className="text-[11px] text-neutral/50 font-bold leading-relaxed flex items-center gap-1.5">
-              <Icon name="baby" size={14} className="text-primary shrink-0" /> Bump Buddy guides expecting parents from week 1 through week 40. No data ever leaves your device.
-            </p>
-          </div>
         </div>
 
         {/* Mobile Top Header Graphic */}
-        <div className="lg:hidden w-full h-48 overflow-hidden relative flex items-center justify-center bg-gradient-to-br from-primary/10 to-secondary/15 border-b border-[#f2edd6]/60">
+        <div className="lg:hidden w-full h-56 overflow-hidden relative flex items-center justify-center bg-gradient-to-br from-primary/10 to-secondary/15 border-b border-[#f2edd6]/60">
           <img 
             src={cozyPregnancyHero} 
             alt="Hero Banner" 
