@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import weeksData from '../data/weeks.json'
 import { getPersistedLMP, calculateCurrentWeek } from '../utils/pregnancy'
@@ -15,9 +15,6 @@ export default function WeekDetails() {
   const [userActiveWeek, setUserActiveWeek] = useState(null)
   const [checkedTasks, setCheckedTasks] = useState([])
   
-  const activeTabRef = useRef(null)
-  const tabContainerRef = useRef(null)
-
   // Load active week and checklist checked states
   useEffect(() => {
     const savedLmp = getPersistedLMP()
@@ -41,16 +38,6 @@ export default function WeekDetails() {
     }
   }, [currentWeekIdx])
 
-  // Center the active week tab in the horizontal scroll bar
-  useEffect(() => {
-    if (activeTabRef.current && tabContainerRef.current) {
-      const container = tabContainerRef.current
-      const tab = activeTabRef.current
-      const scrollPos = tab.offsetLeft - (container.clientWidth / 2) + (tab.clientWidth / 2)
-      container.scrollTo({ left: scrollPos, behavior: 'smooth' })
-    }
-  }, [currentWeekIdx, userActiveWeek])
-
   // Toggle checklist tasks
   const handleCheckboxChange = (task) => {
     const updated = checkedTasks.includes(task)
@@ -72,109 +59,102 @@ export default function WeekDetails() {
     )
   }
 
-  // Create week index array (1 to 40)
-  const allWeeks = Array.from({ length: 40 }, (_, i) => i + 1)
-
   return (
     <div className="w-full py-2 relative z-10 flex flex-col gap-6">
       
-      {/* 📅 Horizontal Binder-Style Week Navigator index strip */}
-      <div className="notebook-card bg-white border border-[#f2edd6]/80 p-3 flex flex-col gap-2">
-        <div className="flex justify-between items-center px-1 border-b border-[#f2edd6]/60 pb-1.5">
-          <span className="text-[10px] uppercase font-extrabold text-neutral/50 tracking-wider">Scrapbook Week Index</span>
-          {userActiveWeek && (
-            <span className="text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
-              Your Current State: Week {userActiveWeek}
-            </span>
+      {/* 📅 Elegant Header with Week Navigation */}
+      <div className="notebook-card p-6 bg-white border border-[#f2edd6]/80 flex flex-col sm:flex-row justify-between items-center gap-4">
+        {/* Previous Week Button */}
+        <div className="flex items-center w-full sm:w-auto justify-start">
+          {currentWeekIdx > 1 ? (
+            <Link 
+              to={`/week/${currentWeekIdx - 1}`} 
+              className="btn btn-outline btn-sm rounded-full border-[#f2edd6]/80 text-neutral/80 hover:bg-neutral/5 hover:text-primary transition-all flex items-center gap-1 min-h-[40px] px-4 font-bold"
+              title={`Go to Week ${currentWeekIdx - 1}`}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+              </svg>
+              <span>Wk {currentWeekIdx - 1}</span>
+            </Link>
+          ) : (
+            <button 
+              disabled 
+              className="btn btn-sm btn-outline rounded-full border-gray-100 text-gray-300 cursor-not-allowed min-h-[40px] px-4 opacity-50 flex items-center gap-1"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+              </svg>
+              <span>Wk 1</span>
+            </button>
           )}
         </div>
-        
-        {/* Horizontal scrollable row of tabs */}
-        <div 
-          ref={tabContainerRef}
-          className="flex gap-2 overflow-x-auto pb-1.5 pt-0.5 scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent select-none"
-        >
-          {allWeeks.map((wNum) => {
-            const isViewingWeek = wNum === currentWeekIdx
-            const isActualWeek = wNum === userActiveWeek
-            
-            let tabClass = "px-3.5 py-1.5 text-xs font-bold transition-all duration-150 rounded-full shrink-0 flex items-center justify-center gap-1 cursor-pointer "
-            if (isViewingWeek) {
-              tabClass += "bg-primary text-white shadow-sm"
-            } else if (isActualWeek) {
-              tabClass += "bg-[#ebb0c9] text-secondary-content border border-[#ebb0c9]/50 shadow-inner pulse-active"
-            } else {
-              tabClass += "bg-[#faf7f2] border border-[#f2edd6]/80 text-neutral/70 hover:bg-[#ebdccb]/30"
-            }
 
-            return (
-              <Link 
-                key={wNum} 
-                to={`/week/${wNum}`}
-                ref={isViewingWeek ? activeTabRef : null}
-                className={tabClass}
-                title={`Go to Week ${wNum} journal page`}
-              >
-                Wk {wNum}
-                {isActualWeek && !isViewingWeek && (
-                  <span className="w-1.5 h-1.5 bg-primary rounded-full border border-white"></span>
-                )}
-              </Link>
-            )
-          })}
+        {/* Center Title & Trimester Info */}
+        <div className="text-center flex flex-col items-center">
+          <span className={`badge font-bold text-[10px] py-1 px-3 rounded-full shadow-sm mb-1 ${
+            currentWeekIdx <= 13 
+              ? 'bg-primary/10 text-primary' 
+              : currentWeekIdx <= 27 
+                ? 'bg-[#ebb0c9]/15 text-[#b26989]' 
+                : 'bg-[#92c2a0]/15 text-[#5c8266]'
+          }`}>
+            Trimester {currentWeekIdx <= 13 ? 1 : currentWeekIdx <= 27 ? 2 : 3}
+          </span>
+          <h1 className="text-2xl font-display font-black text-primary">Week {weekData.weekNumber} Guide</h1>
+          <p className="text-[11px] text-neutral/50 font-semibold mt-1">Pregnancy Journey Tracker</p>
+        </div>
+
+        {/* Next Week Button */}
+        <div className="flex items-center w-full sm:w-auto justify-end">
+          {currentWeekIdx < 40 ? (
+            <Link 
+              to={`/week/${currentWeekIdx + 1}`} 
+              className="btn btn-outline btn-sm rounded-full border-[#f2edd6]/80 text-neutral/80 hover:bg-neutral/5 hover:text-primary transition-all flex items-center gap-1 min-h-[40px] px-4 font-bold"
+              title={`Go to Week ${currentWeekIdx + 1}`}
+            >
+              <span>Wk {currentWeekIdx + 1}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              </svg>
+            </Link>
+          ) : (
+            <button 
+              disabled 
+              className="btn btn-sm btn-outline rounded-full border-gray-100 text-gray-300 cursor-not-allowed min-h-[40px] px-4 opacity-50 flex items-center gap-1"
+            >
+              <span>Wk 40</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              </svg>
+            </button>
+          )}
         </div>
       </div>
 
-      {/* Week Traversal Header on mobile */}
-      <div className="flex justify-between items-center notebook-card p-3 bg-white border border-[#f2edd6]/80 lg:hidden">
-        {currentWeekIdx > 1 ? (
-          <Link to={`/week/${currentWeekIdx - 1}`} className="btn btn-sm btn-ghost h-10 min-h-[40px] text-primary font-bold">
-            ◀ Wk {currentWeekIdx - 1}
-          </Link>
-        ) : (
-          <button className="btn btn-sm btn-ghost btn-disabled opacity-20 h-10 min-h-[40px] font-bold">◀ Wk 1</button>
-        )}
-        <span className="font-display font-extrabold text-sm text-primary">Week {weekData.weekNumber} Page</span>
-        {currentWeekIdx < 40 ? (
-          <Link to={`/week/${currentWeekIdx + 1}`} className="btn btn-sm btn-ghost h-10 min-h-[40px] text-primary font-bold">
-            Wk {currentWeekIdx + 1} ▶
-          </Link>
-        ) : (
-          <button className="btn btn-sm btn-ghost btn-disabled opacity-20 h-10 min-h-[40px] font-bold">Wk 40 ▶</button>
-        )}
-      </div>
-
-      {/* Contextual Active Week Alert on mobile */}
+      {/* Contextual Active Week Alert */}
       {userActiveWeek !== null && userActiveWeek !== currentWeekIdx && (
-        <div className="alert text-xs leading-relaxed py-2.5 px-3.5 rounded-xl border bg-primary/5 border-primary/10 text-neutral lg:hidden">
+        <div className="alert text-xs py-2.5 px-4 rounded-2xl border bg-primary/5 border-primary/10 text-neutral flex items-center gap-2">
           <span>ℹ️</span>
-          <div className="font-semibold">
-            Currently in Week {userActiveWeek}. 
-            <Link to={`/week/${userActiveWeek}`} className="underline font-extrabold text-primary ml-1">Go ➔</Link>
-          </div>
+          <Link 
+            to={`/week/${userActiveWeek}`} 
+            className="underline font-bold text-primary hover:text-primary/80 transition-colors"
+          >
+            Go to your current week (Week {userActiveWeek}) ➔
+          </Link>
         </div>
       )}
 
-      {/* Main Open Diary Journal Spread Grid */}
+      {/* Main Open Scrapbook Tracker Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         
         {/* Left Page Spread: size Polaroid & Highlights side-by-side */}
         <div className="lg:col-span-8 flex flex-col md:grid md:grid-cols-12 gap-6 items-stretch">
           
           {/* Polaroid Baby Size Box */}
-          <div className="md:col-span-6 notebook-card p-5 bg-white border border-[#f2edd6]/80 flex flex-col justify-between items-center text-center">
-            <div className="w-full flex justify-between items-center border-b border-[#f2edd6]/60 pb-3 mb-4">
-              <div className="text-left">
-                <span className="text-[9px] uppercase font-extrabold text-primary/80">Baby Growth Comparison</span>
-                <h4 className="text-lg font-display font-extrabold text-primary leading-none mt-0.5">Week {weekData.weekNumber}</h4>
-              </div>
-              <span className="badge bg-[#ebb0c9] text-secondary-content font-bold border-none py-1.5 px-3 text-xs shadow-sm rounded-full">
-                {weekData.sizeComparison}
-              </span>
-            </div>
-
+          <div className="md:col-span-6 flex flex-col justify-center items-center text-center p-2">
             {/* Large Polaroid Picture Mockup */}
-            <div className="polaroid-frame rotate-1 w-52 md:w-56 my-2">
+            <div className="polaroid-frame rotate-1 w-52 md:w-56">
               <img 
                 src={cozyBabyGrowth} 
                 alt="Baby growth comparison" 
@@ -184,12 +164,9 @@ export default function WeekDetails() {
                 {weekData.sizeComparison}
               </div>
             </div>
-
-            <div className="w-full border-t border-[#f2edd6]/60 pt-3 mt-4 text-left">
-              <p className="text-xs text-neutral/70 italic font-bold">
-                Your baby is growing fast. Keep tracking to see details.
-              </p>
-            </div>
+            <p className="text-xs text-neutral/70 mt-4 font-semibold italic">
+              Your baby is now <span className="text-primary font-extrabold">{weekData.sizeComparison}</span> sized.
+            </p>
           </div>
 
           {/* Highlights & Healthy Tip */}
@@ -200,7 +177,7 @@ export default function WeekDetails() {
               <div className="absolute top-0 bottom-0 left-4 w-[1px] bg-red-200/40"></div>
               <div className="pl-4">
                 <h3 className="text-sm font-display font-extrabold text-primary border-b border-[#f2edd6]/60 pb-2.5 mb-3">
-                  ✨ Journal Highlights
+                  ✨ Developmental Highlights
                 </h3>
                 <ul className="list-disc list-inside text-xs text-neutral/85 flex flex-col gap-3 leading-relaxed font-semibold">
                   {weekData.highlights.map((highlight, idx) => (
@@ -210,10 +187,14 @@ export default function WeekDetails() {
               </div>
             </div>
 
-            {/* Sticky Note Healthy Tip */}
-            <div className="bg-[#ebb0c9]/10 border-l-4 border-[#ebb0c9] p-4.5 rounded-r-2xl rounded-l-none shadow-sm flex flex-col gap-1 border-y border-r border-[#ebb0c9]/25">
-              <h4 className="text-[10px] uppercase font-extrabold text-secondary tracking-widest">💡 Healthy Tip</h4>
-              <p className="text-xs text-neutral/85 leading-relaxed font-bold">
+            {/* Healthy Tip (Notebook Card) */}
+            <div className="notebook-card p-5 bg-white border border-[#f2edd6]/80 flex flex-col gap-3">
+              <div className="flex items-center gap-2 border-b border-[#f2edd6]/60 pb-2.5 mb-1">
+                <h4 className="text-sm font-display font-extrabold text-primary flex items-center gap-1.5">
+                  <span>💡</span> Healthy Tip
+                </h4>
+              </div>
+              <p className="text-xs text-neutral/85 leading-relaxed font-semibold">
                 {weekData.healthTip}
               </p>
             </div>
@@ -260,16 +241,6 @@ export default function WeekDetails() {
                   )
                 })}
               </div>
-            </div>
-
-            {/* Dashboard Action Return */}
-            <div className="border-t border-[#f2edd6]/60 pt-3 mt-4">
-              <Link 
-                to="/" 
-                className="btn btn-outline btn-ghost w-full h-11 text-xs font-bold rounded-xl transition-all duration-200 border-[#f2edd6]/80 hover:bg-neutral/5"
-              >
-                ◀ Return to Dashboard
-              </Link>
             </div>
           </div>
         </div>

@@ -106,7 +106,7 @@ export default function Home() {
         <div className="text-center max-w-md mb-8 mt-4">
           <h1 className="text-4xl font-display font-black text-primary mb-2">👶 Bump Buddy</h1>
           <p className="text-neutral/70 text-sm leading-relaxed font-bold">
-            Your cozy, private pregnancy journal companion.
+            Your cozy, private pregnancy tracker companion.
           </p>
         </div>
         <OnboardingWizard onComplete={handleOnboardingComplete} />
@@ -209,7 +209,7 @@ export default function Home() {
                       to={`/week/${currentWeek}`}
                       className="custom-btn-primary w-full h-12 text-sm text-white font-bold flex items-center justify-center gap-1.5 shadow-sm"
                     >
-                      Open Week {currentWeek} Journal Guide ➔
+                      Open Week {currentWeek} Guide ➔
                     </Link>
                   </div>
                 </div>

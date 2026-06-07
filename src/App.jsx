@@ -62,7 +62,7 @@ function AppContent() {
                     </Link>
                   </li>
                   <li className="text-primary">
-                    Week {weekNum} Journal
+                    Week {weekNum} Guide
                   </li>
                 </ul>
               </div>
