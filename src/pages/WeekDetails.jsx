@@ -3,6 +3,8 @@ import { useParams, Link } from 'react-router-dom'
 import weeksData from '../data/weeks.json'
 import { getPersistedLMP, calculateCurrentWeek } from '../utils/pregnancy'
 import cozyBabyGrowth from '../assets/cozy_baby_growth.png'
+import Icon from '../components/Icon'
+
 
 export default function WeekDetails() {
   const { weekNumber } = useParams()
@@ -135,7 +137,7 @@ export default function WeekDetails() {
       {/* Contextual Active Week Alert */}
       {userActiveWeek !== null && userActiveWeek !== currentWeekIdx && (
         <div className="alert text-xs py-2.5 px-4 rounded-2xl border bg-primary/5 border-primary/10 text-neutral flex items-center gap-2">
-          <span>ℹ️</span>
+          <Icon name="info" size={16} className="text-primary shrink-0" />
           <Link 
             to={`/week/${userActiveWeek}`} 
             className="underline font-bold text-primary hover:text-primary/80 transition-colors"
@@ -176,8 +178,8 @@ export default function WeekDetails() {
             <div className="notebook-card p-5 bg-white border border-[#f2edd6]/80 flex-grow relative overflow-hidden flex flex-col justify-between min-h-[220px]">
               <div className="absolute top-0 bottom-0 left-4 w-[1px] bg-red-200/40"></div>
               <div className="pl-4">
-                <h3 className="text-sm font-display font-extrabold text-primary border-b border-[#f2edd6]/60 pb-2.5 mb-3">
-                  ✨ Developmental Highlights
+                <h3 className="text-sm font-display font-extrabold text-primary border-b border-[#f2edd6]/60 pb-2.5 mb-3 flex items-center gap-1.5">
+                  <Icon name="sparkles" size={16} className="text-primary" /> Developmental Highlights
                 </h3>
                 <ul className="list-disc list-inside text-xs text-neutral/85 flex flex-col gap-3 leading-relaxed font-semibold">
                   {weekData.highlights.map((highlight, idx) => (
@@ -191,7 +193,7 @@ export default function WeekDetails() {
             <div className="notebook-card p-5 bg-white border border-[#f2edd6]/80 flex flex-col gap-3">
               <div className="flex items-center gap-2 border-b border-[#f2edd6]/60 pb-2.5 mb-1">
                 <h4 className="text-sm font-display font-extrabold text-primary flex items-center gap-1.5">
-                  <span>💡</span> Healthy Tip
+                  <Icon name="lightbulb" size={16} className="text-primary" /> Healthy Tip
                 </h4>
               </div>
               <p className="text-xs text-neutral/85 leading-relaxed font-semibold">
@@ -209,8 +211,8 @@ export default function WeekDetails() {
           <div className="notebook-card p-5 bg-white border border-[#f2edd6]/80 flex flex-col justify-between h-full">
             <div>
               <div className="border-b border-[#f2edd6]/60 pb-2.5 mb-4 flex items-center justify-between">
-                <h3 className="text-base font-display font-extrabold text-primary">
-                  ✅ Weekly Checklist
+                <h3 className="text-base font-display font-extrabold text-primary flex items-center gap-1.5">
+                  <Icon name="check" size={18} className="text-primary" /> Weekly Checklist
                 </h3>
                 <span className="badge badge-accent font-bold text-xs py-1 px-2.5 rounded-full text-white">
                   {checkedTasks.length}/{weekData.checklist.length}
