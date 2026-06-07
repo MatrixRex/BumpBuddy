@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { calculateArrivalDate, calculateCurrentWeek } from '../utils/pregnancy'
+import cozyPregnancyHero from '../assets/cozy_pregnancy_hero.png'
 
 const LOADING_STEPS = [
   { text: "Analyzing your Last Menstrual Period...", icon: "📅" },
@@ -19,7 +20,7 @@ export default function OnboardingWizard({ onComplete }) {
 
   const handleNext = () => {
     if (step === 2 && !periodDate) {
-      setError('Please select a date to find your due date.')
+      setError('Please select a date to calculate your timeline.')
       return
     }
     setError('')
@@ -38,7 +39,6 @@ export default function OnboardingWizard({ onComplete }) {
 
     let index = 0
     const interval = setInterval(() => {
-      // Start exit animation (blur + fade out) 200ms before text changes
       setIsTransitioning(true)
 
       setTimeout(() => {
@@ -51,7 +51,7 @@ export default function OnboardingWizard({ onComplete }) {
           setStep(3)
         }
       }, 200)
-    }, 800) // Total 800ms per step (600ms stable + 200ms transition)
+    }, 800)
 
     return () => clearInterval(interval)
   }, [step])
@@ -81,83 +81,67 @@ export default function OnboardingWizard({ onComplete }) {
   }
 
   return (
-    <div className="w-full max-w-md lg:max-w-4xl mx-auto bg-white shadow-xl border border-gray-100 rounded-3xl overflow-hidden">
+    <div className="w-full max-w-md lg:max-w-4xl mx-auto notebook-card overflow-hidden transition-all duration-300 relative z-10 border border-[#f2edd6]/80 bg-white">
       <div className="grid grid-cols-1 lg:grid-cols-12">
         {/* Left Side Presentation Panel (Desktop only) */}
-        <div className="hidden lg:flex lg:col-span-5 bg-gradient-to-br from-primary to-primary/80 text-white p-8 flex-col justify-between relative overflow-hidden">
-          <div className="absolute top-0 right-0 -mr-6 -mt-6 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
-          <div className="absolute bottom-0 left-0 -ml-6 -mb-6 w-32 h-32 bg-secondary/25 rounded-full blur-2xl"></div>
-          
+        <div className="hidden lg:flex lg:col-span-5 bg-gradient-to-br from-primary/5 to-secondary/5 text-neutral p-8 flex-col justify-between relative overflow-hidden border-r border-[#f2edd6]/60">
           <div className="z-10">
-            <span className="text-xs uppercase font-extrabold tracking-widest text-secondary-content/85 bg-secondary px-3 py-1 rounded-full">
-              Your Companion
+            <span className="text-xs uppercase font-extrabold tracking-widest text-primary bg-primary/10 px-3 py-1.5 rounded-full">
+              🌸 Your Companion
             </span>
-            <h2 className="text-3xl font-black mt-4 leading-tight">Bump Buddy</h2>
-            <p className="text-sm opacity-90 mt-2 leading-relaxed font-medium">
-              Track your pregnancy journey with ease, transparency, and complete privacy.
+            <h2 className="text-3xl font-display font-black mt-5 leading-tight text-primary">Bump Buddy</h2>
+            <p className="text-sm text-neutral/75 mt-2 leading-relaxed font-semibold">
+              Track your pregnancy journey with ease, warmth, and complete privacy.
             </p>
-            
-            <div className="flex flex-col gap-5 mt-8">
-              <div className="flex gap-3 items-start">
-                <span className="text-2xl mt-0.5" role="img" aria-label="calendar">📅</span>
-                <div>
-                  <h4 className="text-sm font-bold">Estimated Due Date</h4>
-                  <p className="text-xs opacity-80 mt-0.5">Accurate calculation based on Naegele's Rule.</p>
-                </div>
-              </div>
-              
-              <div className="flex gap-3 items-start">
-                <span className="text-2xl mt-0.5" role="img" aria-label="strawberry">🍓</span>
-                <div>
-                  <h4 className="text-sm font-bold">Weekly Growth Insights</h4>
-                  <p className="text-xs opacity-80 mt-0.5 font-medium">Detailed baby size comparisons and highlights.</p>
-                </div>
-              </div>
-              
-              <div className="flex gap-3 items-start">
-                <span className="text-2xl mt-0.5" role="img" aria-label="checklist">📋</span>
-                <div>
-                  <h4 className="text-sm font-bold">Personalized Checklists</h4>
-                  <p className="text-xs opacity-80 mt-0.5">Custom to-do templates for every week of pregnancy.</p>
-                </div>
-              </div>
-              
-              <div className="flex gap-3 items-start">
-                <span className="text-2xl mt-0.5" role="img" aria-label="privacy">🔒</span>
-                <div>
-                  <h4 className="text-sm font-bold">100% Private</h4>
-                  <p className="text-xs opacity-80 mt-0.5">No registration required. Data stays on your device.</p>
-                </div>
-              </div>
+          </div>
+          
+          {/* Big Polaroid Image Frame */}
+          <div className="my-8 z-10 flex justify-center items-center">
+            <div className="polaroid-frame -rotate-2">
+              <img 
+                src={cozyPregnancyHero} 
+                alt="Cozy parenting scene" 
+                className="w-full max-w-[210px] h-auto object-contain rounded-lg border border-[#f2edd6]/40 bg-[#faf7f2]/20"
+              />
+              <div className="polaroid-caption mt-3">Cozy nursery moments</div>
             </div>
           </div>
           
-          <div className="z-10 mt-8 pt-4 border-t border-white/20">
-            <p className="text-xs opacity-75">
-              Bump Buddy guides expecting parents from week 1 through week 40.
+          <div className="z-10 pt-4 border-t border-[#f2edd6]/80">
+            <p className="text-[11px] text-neutral/50 font-bold leading-relaxed">
+              👶 Bump Buddy guides expecting parents from week 1 through week 40. No data ever leaves your device.
             </p>
           </div>
         </div>
 
+        {/* Mobile Top Header Graphic */}
+        <div className="lg:hidden w-full h-48 overflow-hidden relative flex items-center justify-center bg-gradient-to-br from-primary/10 to-secondary/15 border-b border-[#f2edd6]/60">
+          <img 
+            src={cozyPregnancyHero} 
+            alt="Hero Banner" 
+            className="w-full h-full object-cover opacity-90"
+          />
+        </div>
+
         {/* Right Side / Onboarding Content */}
-        <div className="col-span-1 lg:col-span-7 p-6 md:p-8 flex flex-col justify-center bg-white">
+        <div className="col-span-1 lg:col-span-7 p-6 md:p-8 flex flex-col justify-center bg-white/50 backdrop-blur-sm lg:bg-white transition-colors duration-300">
           {/* Progress Steps Tracker */}
-          <ul className="steps steps-horizontal w-full mb-8 text-xs font-semibold">
-            <li className={`step ${step >= 1 ? 'step-secondary' : ''}`}>Welcome</li>
-            <li className={`step ${step >= 2 || step === 'loading' ? 'step-secondary' : ''}`}>Your Info</li>
-            <li className={`step ${step >= 3 ? 'step-secondary' : ''}`}>Summary</li>
+          <ul className="steps steps-horizontal w-full mb-8 text-xs font-semibold steps-secondary">
+            <li className={`step ${step >= 1 ? 'step-primary' : ''}`}>Welcome</li>
+            <li className={`step ${step >= 2 || step === 'loading' ? 'step-primary' : ''}`}>Your Info</li>
+            <li className={`step ${step >= 3 ? 'step-primary' : ''}`}>Summary</li>
           </ul>
 
           {/* Step 1: Welcome & Setup */}
           {step === 1 && (
             <div className="flex flex-col gap-4 text-center">
-              <h2 className="text-2xl font-bold text-primary">Welcome to Bump Buddy!</h2>
-              <p className="text-sm text-neutral leading-relaxed">
-                A simple way to look up weekly growth guides, track highlights, and manage your checklist without an account.
+              <h2 className="text-2xl font-display font-black text-primary">Welcome to Bump Buddy!</h2>
+              <p className="text-sm text-neutral/85 leading-relaxed font-semibold">
+                A warm, feel-good space to look up weekly growth guides, track highlights, and manage your checklist without an account.
               </p>
               <button 
                 onClick={handleNext}
-                className="btn btn-primary w-full mt-4 h-12 min-h-[48px] text-white"
+                className="custom-btn-primary w-full mt-4 h-12 min-h-[48px] text-white flex items-center justify-center gap-1.5 shadow-sm hover:scale-[1.01]"
               >
                 Calculate My Due Date ➔
               </button>
@@ -167,12 +151,12 @@ export default function OnboardingWizard({ onComplete }) {
           {/* Step 2: Date Input */}
           {step === 2 && (
             <div className="flex flex-col gap-4">
-              <h2 className="text-xl font-bold text-primary text-center">When was the start of your last period?</h2>
-              <p className="text-sm text-neutral text-center leading-relaxed">
+              <h2 className="text-xl font-display font-extrabold text-primary text-center">When was the start of your last period?</h2>
+              <p className="text-sm text-neutral/85 text-center leading-relaxed font-semibold">
                 We'll use your Last Menstrual Period (LMP) to calculate your estimated due date and tailor your weekly guides.
               </p>
               <div className="form-control w-full mt-2">
-                <label className="label font-bold text-xs uppercase tracking-wide text-neutral">
+                <label className="label font-bold text-xs uppercase tracking-wide text-neutral/50">
                   Last Menstrual Period (LMP) Start Date
                 </label>
                 <input 
@@ -183,13 +167,13 @@ export default function OnboardingWizard({ onComplete }) {
                     setError('')
                   }}
                   max={new Date().toISOString().slice(0, 10)}
-                  className="input input-bordered w-full h-12 min-h-[48px] border-primary"
+                  className="custom-input w-full h-12 min-h-[48px]"
                 />
-                {error && <span className="text-xs text-error mt-2">{error}</span>}
+                {error && <span className="text-xs text-error mt-2 font-bold">⚠️ {error}</span>}
               </div>
               <div className="flex justify-between gap-4 mt-6">
-                <button onClick={handleBack} className="btn btn-ghost flex-1 h-12 min-h-[48px]">Back</button>
-                <button onClick={handleNext} className="btn btn-primary flex-1 h-12 min-h-[48px] text-white">Calculate Due Date ➔</button>
+                <button onClick={handleBack} className="btn btn-ghost flex-1 h-12 min-h-[48px] font-bold">Back</button>
+                <button onClick={handleNext} className="custom-btn-primary flex-1 h-12 min-h-[48px] text-white">Calculate Due Date ➔</button>
               </div>
             </div>
           )}
@@ -197,16 +181,13 @@ export default function OnboardingWizard({ onComplete }) {
           {/* Step: Loading */}
           {step === 'loading' && (
             <div className="flex flex-col items-center text-center gap-6 py-4">
-              <h2 className="text-xl font-bold text-primary">Calculating your timeline...</h2>
+              <h2 className="text-xl font-display font-extrabold text-primary">Calculating your timeline...</h2>
               
-              <div className="relative w-20 h-20 flex items-center justify-center">
-                {/* Pink/Rose pregnancy wheel spinner */}
-                <div className="absolute w-20 h-20 border-4 border-pink-100 border-t-pink-400 rounded-full animate-spin"></div>
-                
-                {/* Animating center icon */}
+              <div className="relative w-24 h-24 flex items-center justify-center">
+                <div className="absolute w-20 h-20 border-4 border-primary/10 border-t-primary rounded-full animate-spin"></div>
                 <span 
-                  className={`text-3xl transition-all duration-200 transform ${
-                    isTransitioning ? 'opacity-0 blur-sm scale-95' : 'opacity-100 blur-0 scale-100'
+                  className={`text-4xl transition-all duration-200 transform ${
+                    isTransitioning ? 'opacity-0 blur-sm scale-90' : 'opacity-100 blur-0 scale-100'
                   }`}
                 >
                   {LOADING_STEPS[currentStepIndex].icon}
@@ -223,7 +204,7 @@ export default function OnboardingWizard({ onComplete }) {
                 </p>
               </div>
               
-              <p className="text-xs text-neutral/60 italic">
+              <p className="text-xs text-neutral/50 italic font-semibold">
                 Setting up needed items for a smooth pregnancy journey...
               </p>
             </div>
@@ -232,25 +213,25 @@ export default function OnboardingWizard({ onComplete }) {
           {/* Step 3: Result Summary & Save */}
           {step === 3 && (
             <div className="flex flex-col gap-4 text-center">
-              <h2 className="text-2xl font-bold text-primary">Your pregnancy tracker is ready!</h2>
-              <p className="text-sm text-neutral">Based on your LMP, here is your estimated timeline:</p>
+              <h2 className="text-2xl font-display font-extrabold text-primary">Your pregnancy tracker is ready!</h2>
+              <p className="text-sm text-neutral/80 font-semibold">Based on your LMP, here is your estimated timeline:</p>
               
-              <div className="bg-base-100 border-2 border-secondary/40 rounded-2xl p-5 my-2 flex flex-col gap-3">
+              <div className="bg-secondary/10 border-2 border-secondary/15 rounded-2xl p-5 my-2 text-left">
                 <div>
-                  <p className="text-xs uppercase font-semibold text-neutral tracking-wider">Estimated Due Date</p>
-                  <h3 className="text-xl font-extrabold text-primary">{formattedBirthDate()}</h3>
+                  <p className="text-[10px] uppercase font-extrabold text-neutral/50 tracking-wider">Estimated Due Date (EDD)</p>
+                  <h3 className="text-xl font-display font-black text-primary mt-0.5">{formattedBirthDate()}</h3>
                 </div>
-                <div className="border-t border-dashed border-secondary/40 pt-3">
-                  <p className="text-sm text-neutral">
-                    You are currently in <span className="font-bold text-primary">Week {estimatedWeek()}</span> of pregnancy!
+                <div className="border-t border-dashed border-primary/20 pt-3">
+                  <p className="text-sm text-neutral font-semibold">
+                    You are currently in <span className="font-extrabold text-primary text-base">Week {estimatedWeek()}</span> of pregnancy!
                   </p>
                 </div>
               </div>
 
-              <p className="text-xs text-neutral italic">Ready to begin tracking your journey?</p>
+              <p className="text-xs text-neutral/50 italic font-semibold">Ready to begin tracking your journey?</p>
               <div className="flex justify-between gap-4 mt-4">
-                <button onClick={handleBack} className="btn btn-ghost flex-1 h-12 min-h-[48px]">Back</button>
-                <button onClick={handleFinish} className="btn btn-primary flex-1 h-12 min-h-[48px] text-white">Open My Pregnancy Dashboard ➔</button>
+                <button onClick={handleBack} className="btn btn-ghost flex-1 h-12 min-h-[48px] font-bold">Back</button>
+                <button onClick={handleFinish} className="custom-btn-primary flex-1 h-12 min-h-[48px] text-white">Open Dashboard ➔</button>
               </div>
             </div>
           )}
