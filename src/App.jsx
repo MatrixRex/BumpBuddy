@@ -52,22 +52,22 @@ function AppContent() {
           
           <div className="flex-none flex items-center gap-4">
             {isWeekPage ? (
-              <div className="breadcrumbs text-xs font-semibold text-neutral/60 hidden sm:block">
+              <div className="breadcrumbs text-xs font-bold text-neutral/60 hidden sm:block">
                 <ul>
                   <li>
-                    <Link to="/" className="hover:text-primary transition-colors font-display font-bold">
+                    <Link to="/" className="hover:text-primary transition-colors">
                       Dashboard
                     </Link>
                   </li>
-                  <li className="font-display font-black text-primary">
+                  <li className="text-primary">
                     Week {weekNum} Journal
                   </li>
                 </ul>
               </div>
             ) : (
-              <div className="breadcrumbs text-xs font-semibold text-neutral/40 hidden sm:block">
+              <div className="breadcrumbs text-xs font-bold text-neutral/40 hidden sm:block">
                 <ul>
-                  <li className="font-display font-black">Dashboard</li>
+                  <li>Dashboard</li>
                 </ul>
               </div>
             )}
