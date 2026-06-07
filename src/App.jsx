@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom'
 import Home from './pages/Home'
 import WeekDetails from './pages/WeekDetails'
+import Timeline from './pages/Timeline'
 import { getPersistedLMP, calculateCurrentWeek, clearPersistedData } from './utils/pregnancy'
 
 function AppContent() {
@@ -13,6 +14,7 @@ function AppContent() {
   
   const pathname = location.pathname
   const isWeekPage = pathname.includes('/week/')
+  const isTimelinePage = pathname === '/timeline'
   const weekNum = isWeekPage ? pathname.split('/').pop() : null
 
   const syncPregnancyState = () => {
@@ -64,6 +66,19 @@ function AppContent() {
                   </li>
                 </ul>
               </div>
+            ) : isTimelinePage ? (
+              <div className="breadcrumbs text-xs font-bold text-neutral/60 hidden sm:block">
+                <ul>
+                  <li>
+                    <Link to="/" className="hover:text-primary transition-colors">
+                      Dashboard
+                    </Link>
+                  </li>
+                  <li className="text-primary">
+                    Journey Timeline
+                  </li>
+                </ul>
+              </div>
             ) : (
               <div className="breadcrumbs text-xs font-bold text-neutral/40 hidden sm:block">
                 <ul>
@@ -92,6 +107,7 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/week/:weekNumber" element={<WeekDetails />} />
+          <Route path="/timeline" element={<Timeline />} />
         </Routes>
       </main>
 

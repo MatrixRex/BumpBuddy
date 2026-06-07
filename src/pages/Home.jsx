@@ -238,11 +238,20 @@ export default function Home() {
           {/* Timeline Browser Card */}
           <div className="notebook-card w-full p-6 bg-white border border-[#f2edd6]/85 flex flex-col justify-between h-full">
             <div>
-              <div className="border-b border-[#f2edd6]/60 pb-3 mb-4">
-                <h3 className="text-sm font-display font-extrabold text-primary flex items-center gap-1.5">
-                  📅 Journey Timeline
-                </h3>
-                <p className="text-[10px] text-neutral/50 mt-0.5 font-bold">Your active weeks path (centered around Week {currentWeek})</p>
+              <div className="border-b border-[#f2edd6]/60 pb-3 mb-4 flex justify-between items-center gap-4">
+                <div>
+                  <h3 className="text-sm font-display font-extrabold text-primary flex items-center gap-1.5">
+                    📅 Journey Timeline
+                  </h3>
+                  <p className="text-[10px] text-neutral/50 mt-0.5 font-bold">Your active weeks path (centered around Week {currentWeek})</p>
+                </div>
+                <Link 
+                  to="/timeline" 
+                  className="btn btn-ghost btn-xs text-primary font-bold hover:bg-primary/10 rounded-lg flex items-center gap-1 shrink-0"
+                  title="View Full Journey Timeline"
+                >
+                  Expand ↗
+                </Link>
               </div>
               
               {/* Vertical Timeline Container */}
@@ -253,35 +262,66 @@ export default function Home() {
                   const weekData = weeksData.find(w => w.weekNumber === wNum)
                   
                   // Get trimester details for color coding
-                  let trimColor = "border-primary bg-primary"
-                  let lineColor = "bg-primary/20"
+                  let activeLineColor = "bg-primary"
+                  let activeTextColor = "text-primary"
                   let badgeColor = "bg-primary/10 text-primary"
                   
                   if (wNum >= 14 && wNum <= 27) {
-                    trimColor = "border-[#ebb0c9] bg-[#ebb0c9]"
-                    lineColor = "bg-[#ebb0c9]/30"
+                    activeLineColor = "bg-[#ebb0c9]"
+                    activeTextColor = "text-[#b26989]"
                     badgeColor = "bg-[#ebb0c9]/15 text-[#b26989]"
                   } else if (wNum >= 28) {
-                    trimColor = "border-[#92c2a0] bg-[#92c2a0]"
-                    lineColor = "bg-[#92c2a0]/30"
+                    activeLineColor = "bg-[#92c2a0]"
+                    activeTextColor = "text-[#5c8266]"
                     badgeColor = "bg-[#92c2a0]/15 text-[#5c8266]"
+                  }
+
+                  // Determine line connection states
+                  const showIncoming = index > 0
+                  const showOutgoing = index < displayedWeeks.length - 1
+                  
+                  const incomingLineColor = showIncoming
+                    ? (wNum <= currentWeek ? activeLineColor : "bg-[#f2edd6]/80")
+                    : ""
+                  const outgoingLineColor = showOutgoing
+                    ? (wNum < currentWeek ? activeLineColor : "bg-[#f2edd6]/80")
+                    : ""
+
+                  // Timeline middle dot/icon
+                  let middleElement = null
+                  if (isPast) {
+                    middleElement = (
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" className={`w-5 h-5 ${activeTextColor}`} fill="currentColor">
+                        <rect width="256" height="256" fill="none"/>
+                        <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm49.51,85.51-56,56a8,8,0,0,1-11.31,0l-28-28a8,8,0,1,1,11.32-11.32L116,148.69l50.34-50.34a8,8,0,0,1,11.31,11.31Z"/>
+                      </svg>
+                    )
+                  } else if (isCurrent) {
+                    middleElement = (
+                      <div className="relative flex items-center justify-center">
+                        <span className={`absolute inline-flex h-5 w-5 rounded-full opacity-35 animate-ping ${activeLineColor}`}></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" className={`w-5 h-5 relative z-10 ${activeTextColor}`} fill="currentColor">
+                          <rect width="256" height="256" fill="none"/>
+                          <circle cx="128" cy="128" r="96" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="20"/>
+                          <circle cx="128" cy="128" r="48" fill="currentColor"/>
+                        </svg>
+                      </div>
+                    )
+                  } else {
+                    middleElement = (
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" className="w-5 h-5 text-neutral/30">
+                        <rect width="256" height="256" fill="none"/>
+                        <circle cx="128" cy="128" r="96" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16"/>
+                      </svg>
+                    )
                   }
 
                   return (
                     <li key={wNum} className="w-full">
-                      {index > 0 && <hr className={`${lineColor}`} />}
+                      {showIncoming && <hr className={`${incomingLineColor}`} />}
                       
-                      {/* Timeline Dot */}
                       <div className="timeline-middle">
-                        <div 
-                          className={`w-3 h-3 rounded-full border-2 transition-all duration-300 ${
-                            isCurrent 
-                              ? `${trimColor} scale-125 ring-4 ring-offset-2 ring-primary/20 pulse-active` 
-                              : isPast 
-                                ? `${trimColor} opacity-70` 
-                                : `border-neutral/30 bg-white`
-                          }`}
-                        ></div>
+                        {middleElement}
                       </div>
                       
                       {/* Timeline content on the right */}
@@ -305,7 +345,7 @@ export default function Home() {
                         </Link>
                       </div>
                       
-                      {index < displayedWeeks.length - 1 && <hr className={`${lineColor}`} />}
+                      {showOutgoing && <hr className={`${outgoingLineColor}`} />}
                     </li>
                   )
                 })}
