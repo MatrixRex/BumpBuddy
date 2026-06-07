@@ -4,6 +4,8 @@ import Home from './pages/Home'
 import WeekDetails from './pages/WeekDetails'
 import Timeline from './pages/Timeline'
 import { getPersistedLMP, calculateCurrentWeek, clearPersistedData } from './utils/pregnancy'
+import Icon from './components/Icon'
+
 
 function AppContent() {
   const [currentWeek, setCurrentWeek] = useState(null)
@@ -48,7 +50,7 @@ function AppContent() {
         <div className="navbar max-w-6xl mx-auto w-full px-4 md:px-6 py-2 flex items-center justify-between">
           <div className="flex-grow flex items-center">
             <Link to="/" className="text-2xl font-display font-black tracking-tight text-primary flex items-center gap-1.5 min-h-[48px] px-2 rounded-xl hover:bg-[#faf7f2]/50 transition-colors">
-              👶 Bump Buddy
+              <Icon name="baby" size={24} className="text-primary" /> Bump Buddy
             </Link>
           </div>
           
@@ -142,14 +144,18 @@ function AppContent() {
 
             <div className="border-t border-[#f2edd6] pt-4 flex flex-col gap-4">
               <div className="bg-[#faf7f2] rounded-2xl p-4 border border-[#f2edd6]/60">
-                <h4 className="text-xs font-bold text-neutral">🔒 100% Private</h4>
+                <h4 className="text-xs font-bold text-neutral flex items-center gap-1.5">
+                  <Icon name="lock" size={16} className="text-neutral" /> 100% Private
+                </h4>
                 <p className="text-xs text-neutral/70 mt-1 leading-relaxed font-semibold">
                   All of your pregnancy dates, calculations, and checklist progress are stored locally on your device. No registration is required, and no data is ever uploaded.
                 </p>
               </div>
 
               <div className="bg-red-50/40 rounded-2xl p-4 border border-red-100/60 flex flex-col gap-2.5 mt-2">
-                <h4 className="text-xs font-bold text-error">⚠️ Reset Tracker</h4>
+                <h4 className="text-xs font-bold text-error flex items-center gap-1.5">
+                  <Icon name="warning" size={16} className="text-error" /> Reset Tracker
+                </h4>
                 <p className="text-xs text-neutral/70 leading-relaxed font-semibold">
                   Clearing the tracker data will permanently delete your Last Menstrual Period date and reset all weekly checklists.
                 </p>
