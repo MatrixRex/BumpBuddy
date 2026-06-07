@@ -4,6 +4,8 @@ import OnboardingWizard from '../components/OnboardingWizard'
 import { getPersistedLMP, setPersistedLMP, calculateArrivalDate, calculateCurrentWeek } from '../utils/pregnancy'
 import weeksData from '../data/weeks.json'
 import cozyBabyGrowth from '../assets/cozy_baby_growth.png'
+import Icon from '../components/Icon'
+
 
 export default function Home() {
   const [lmp, setLmp] = useState('')
@@ -104,7 +106,9 @@ export default function Home() {
     return (
       <div className="flex flex-col items-center justify-center py-6 px-4">
         <div className="text-center max-w-md mb-8 mt-4">
-          <h1 className="text-4xl font-display font-black text-primary mb-2">👶 Bump Buddy</h1>
+          <h1 className="text-4xl font-display font-black text-primary mb-2 flex items-center justify-center gap-2">
+            <Icon name="baby" size={36} className="text-primary" /> Bump Buddy
+          </h1>
           <p className="text-neutral/70 text-sm leading-relaxed font-bold">
             Your cozy, private pregnancy tracker companion.
           </p>
@@ -134,14 +138,14 @@ export default function Home() {
               {/* Header section with week indicator */}
               <div className="flex justify-between items-center border-b border-[#f2edd6]/60 pb-4 mb-6">
                 <div>
-                  <span className="text-[10px] font-extrabold uppercase tracking-widest text-primary bg-primary/10 px-3 py-1 rounded-full">
-                    👶 Weekly Spotlight
+                  <span className="text-[10px] font-extrabold uppercase tracking-widest text-primary bg-primary/10 px-3 py-1.5 rounded-full inline-flex items-center gap-1.5">
+                    <Icon name="baby" size={14} className="text-primary" /> Weekly Spotlight
                   </span>
                   <h2 className="text-3xl font-display font-black text-primary mt-3 leading-none">Week {activeWeekData.weekNumber}</h2>
                 </div>
                 <div className="text-right">
-                  <span className="badge badge-secondary font-bold text-xs py-2.5 px-4 shadow-sm rounded-full text-secondary-content">
-                    🍓 {activeWeekData.sizeComparison}
+                  <span className="badge badge-secondary font-bold text-xs py-2.5 px-4 shadow-sm rounded-full text-secondary-content inline-flex items-center gap-1.5">
+                    <Icon name="scale" size={14} className="text-secondary-content" /> {activeWeekData.sizeComparison}
                   </span>
                 </div>
               </div>
@@ -184,8 +188,8 @@ export default function Home() {
                   {/* Checklist progress bar */}
                   <div className="bg-accent/5 rounded-2xl p-4 border border-accent/20 flex flex-col gap-2 mt-2 w-full">
                     <div className="flex items-center justify-between">
-                      <h4 className="text-[10px] uppercase font-extrabold text-neutral/80 tracking-wider flex items-center gap-1">
-                        ✅ Checklist Progress
+                      <h4 className="text-[10px] uppercase font-extrabold text-neutral/80 tracking-wider flex items-center gap-1.5">
+                        <Icon name="check" size={14} className="text-accent" /> Checklist Progress
                       </h4>
                       <span className="text-[10px] font-bold text-neutral bg-accent/20 px-2 py-0.5 rounded-full">
                         {completedChecklistCount}/{totalChecklistCount} Tasks
@@ -197,9 +201,9 @@ export default function Home() {
                         style={{ width: `${checklistPercentage}%` }}
                       ></div>
                     </div>
-                    <p className="text-[10px] text-neutral/60 font-bold">
+                    <p className="text-[10px] text-neutral/60 font-bold flex items-center gap-1">
                       {checklistPercentage === 100 
-                        ? "🎉 All checklist tasks complete!"
+                        ? <><Icon name="confetti" size={14} className="text-accent" /> All checklist tasks complete!</>
                         : `${checklistPercentage}% completed`}
                     </p>
                   </div>
@@ -241,7 +245,7 @@ export default function Home() {
               <div className="border-b border-[#f2edd6]/60 pb-3 mb-4 flex justify-between items-center gap-4">
                 <div>
                   <h3 className="text-sm font-display font-extrabold text-primary flex items-center gap-1.5">
-                    📅 Journey Timeline
+                    <Icon name="calendar" size={16} className="text-primary" /> Journey Timeline
                   </h3>
                   <p className="text-[10px] text-neutral/50 mt-0.5 font-bold">Your active weeks path (centered around Week {currentWeek})</p>
                 </div>
