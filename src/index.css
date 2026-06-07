@@ -83,19 +83,19 @@ body {
 }
 
 .custom-btn-secondary {
-  background-color: #ebb0c9;
-  color: #2b2738;
+  background-color: #e8b7b3;
+  color: #4c1c18;
   border: none;
   border-radius: 9999px;
   font-weight: 700;
-  box-shadow: 0 4px 12px 0 rgba(235, 176, 201, 0.15);
+  box-shadow: 0 4px 12px 0 rgba(232, 183, 179, 0.15);
   transition: all 0.2s ease;
 }
 
 .custom-btn-secondary:hover {
-  background-color: #e29bb9;
+  background-color: #df9e9a;
   transform: scale(1.02);
-  box-shadow: 0 6px 16px 0 rgba(235, 176, 201, 0.25);
+  box-shadow: 0 6px 16px 0 rgba(232, 183, 179, 0.25);
 }
 
 /* Cozy Input Fields */
@@ -125,7 +125,7 @@ body {
 
 .custom-checklist-item:hover {
   background-color: #fdfcf9;
-  border-color: #92c2a0; /* Sage accent border */
+  border-color: #9ebfa6; /* Sage accent border */
 }
 
 .custom-checklist-item.checked {

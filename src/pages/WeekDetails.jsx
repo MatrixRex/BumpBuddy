@@ -98,8 +98,8 @@ export default function WeekDetails() {
             currentWeekIdx <= 13 
               ? 'bg-primary/10 text-primary' 
               : currentWeekIdx <= 27 
-                ? 'bg-[#ebb0c9]/15 text-[#b26989]' 
-                : 'bg-[#92c2a0]/15 text-[#5c8266]'
+                ? 'bg-[#e8b7b3]/15 text-[#96473f]' 
+                : 'bg-[#9ebfa6]/15 text-[#2e5738]'
           }`}>
             Trimester {currentWeekIdx <= 13 ? 1 : currentWeekIdx <= 27 ? 2 : 3}
           </span>

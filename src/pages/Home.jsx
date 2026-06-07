@@ -234,7 +234,7 @@ export default function Home() {
               <p className="text-xs text-neutral/60 font-bold">Estimated Due Date (EDD)</p>
               <h4 className="text-2xl font-display font-black text-primary mt-0.5">{formattedBirthDate()}</h4>
             </div>
-            <div className="badge bg-[#ebb0c9] text-secondary-content font-bold border-none py-2 px-4.5 mx-auto mt-2.5 text-xs shadow-sm rounded-full">
+            <div className="badge bg-[#e8b7b3] text-secondary-content font-bold border-none py-2 px-4.5 mx-auto mt-2.5 text-xs shadow-sm rounded-full">
               Due in {40 - currentWeek} Weeks
             </div>
           </div>
@@ -271,13 +271,13 @@ export default function Home() {
                   let badgeColor = "bg-primary/10 text-primary"
                   
                   if (wNum >= 14 && wNum <= 27) {
-                    activeLineColor = "bg-[#ebb0c9]"
-                    activeTextColor = "text-[#b26989]"
-                    badgeColor = "bg-[#ebb0c9]/15 text-[#b26989]"
+                    activeLineColor = "bg-[#e8b7b3]"
+                    activeTextColor = "text-[#96473f]"
+                    badgeColor = "bg-[#e8b7b3]/15 text-[#96473f]"
                   } else if (wNum >= 28) {
-                    activeLineColor = "bg-[#92c2a0]"
-                    activeTextColor = "text-[#5c8266]"
-                    badgeColor = "bg-[#92c2a0]/15 text-[#5c8266]"
+                    activeLineColor = "bg-[#9ebfa6]"
+                    activeTextColor = "text-[#2e5738]"
+                    badgeColor = "bg-[#9ebfa6]/15 text-[#2e5738]"
                   }
 
                   // Determine line connection states

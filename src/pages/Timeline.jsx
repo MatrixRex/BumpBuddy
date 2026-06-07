@@ -96,13 +96,13 @@ export default function Timeline() {
             let trimesterBadgeStyle = ""
 
             if (wNum >= 14 && wNum <= 27) {
-              activeLineColor = "bg-[#ebb0c9]"
-              activeTextColor = "text-[#b26989]"
-              badgeColor = "bg-[#ebb0c9]/15 text-[#b26989]"
+              activeLineColor = "bg-[#e8b7b3]"
+              activeTextColor = "text-[#96473f]"
+              badgeColor = "bg-[#e8b7b3]/15 text-[#96473f]"
             } else if (wNum >= 28) {
-              activeLineColor = "bg-[#92c2a0]"
-              activeTextColor = "text-[#5c8266]"
-              badgeColor = "bg-[#92c2a0]/15 text-[#5c8266]"
+              activeLineColor = "bg-[#9ebfa6]"
+              activeTextColor = "text-[#2e5738]"
+              badgeColor = "bg-[#9ebfa6]/15 text-[#2e5738]"
             }
 
             // Define trimester headers to insert
@@ -111,10 +111,10 @@ export default function Timeline() {
               trimesterBadgeStyle = "bg-primary/10 border-primary/20 text-primary"
             } else if (wNum === 14) {
               trimesterTitle = "Trimester 2: The Golden Period (Weeks 14 - 27)"
-              trimesterBadgeStyle = "bg-[#ebb0c9]/15 border-[#ebb0c9]/30 text-[#b26989]"
+              trimesterBadgeStyle = "bg-[#e8b7b3]/15 border-[#e8b7b3]/30 text-[#96473f]"
             } else if (wNum === 28) {
               trimesterTitle = "Trimester 3: The Final Stretch (Weeks 28 - 40)"
-              trimesterBadgeStyle = "bg-[#92c2a0]/15 border-[#92c2a0]/30 text-[#5c8266]"
+              trimesterBadgeStyle = "bg-[#9ebfa6]/15 border-[#9ebfa6]/30 text-[#2e5738]"
             }
 
             // Determine if we show connector lines
