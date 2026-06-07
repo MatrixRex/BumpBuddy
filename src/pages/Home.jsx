@@ -304,11 +304,6 @@ export default function Home() {
                             </span>
                           )}
                         </div>
-                        {weekData && (
-                          <p className="text-[11px] text-neutral/60 font-semibold mt-1 truncate">
-                            {weekData.highlights[0]}
-                          </p>
-                        )}
                       </Link>
                     </div>
                   )
