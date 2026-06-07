@@ -89,6 +89,16 @@ export default function Home() {
     ? Math.round((completedChecklistCount / totalChecklistCount) * 100) 
     : 0
 
+  const displayedWeeks = (() => {
+    const startWeek = Math.max(1, Math.min(36, currentWeek - 2))
+    const endWeek = Math.min(40, startWeek + 4)
+    const weeks = []
+    for (let w = startWeek; w <= endWeek; w++) {
+      weeks.push(w)
+    }
+    return weeks
+  })()
+
   // Onboarding view for new users
   if (!lmp) {
     return (
@@ -225,50 +235,84 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Timeline Browser */}
-          <div className="notebook-card w-full p-5 bg-white border border-[#f2edd6]/85 flex flex-col justify-between">
+          {/* Timeline Browser Card */}
+          <div className="notebook-card w-full p-6 bg-white border border-[#f2edd6]/85 flex flex-col justify-between h-full">
             <div>
-              <div className="border-b border-[#f2edd6]/60 pb-2.5">
+              <div className="border-b border-[#f2edd6]/60 pb-3 mb-4">
                 <h3 className="text-sm font-display font-extrabold text-primary flex items-center gap-1.5">
-                  🗺️ Timeline Browser
+                  📅 Journey Timeline
                 </h3>
+                <p className="text-[10px] text-neutral/50 mt-0.5 font-bold">Your active weeks path (centered around Week {currentWeek})</p>
               </div>
               
-              <div className="flex flex-col gap-4 mt-3">
-                {trimesters.map((t) => (
-                  <div key={t.name} className="flex flex-col gap-1.5">
-                    <div className="flex justify-between items-center px-1">
-                      <span className="text-[10px] font-extrabold text-neutral">{t.name}</span>
-                      <span className="text-[8px] font-bold text-gray-400 uppercase tracking-widest">{t.description}</span>
-                    </div>
-                    <div className="grid grid-cols-7 gap-1">
-                      {t.weeks.map((wNum) => {
-                        const isActive = wNum === currentWeek
-                        const isPast = wNum < currentWeek
-                        
-                        let btnClass = "btn btn-xs h-7 min-h-[28px] w-full text-[10px] font-bold transition-all duration-200 p-0 rounded-full "
-                        if (isActive) {
-                          btnClass += "btn-primary shadow-sm pulse-active text-white border-none"
-                        } else if (isPast) {
-                          btnClass += "bg-primary/10 border-transparent text-primary hover:bg-primary/20"
-                        } else {
-                          btnClass += "bg-[#faf7f2] border border-[#f2edd6]/60 text-neutral/70 hover:bg-[#ebdccb]/30"
-                        }
+              {/* Vertical Timeline Container */}
+              <div className="relative pl-6 flex flex-col gap-5 mt-2">
+                {displayedWeeks.map((wNum, index) => {
+                  const isCurrent = wNum === currentWeek
+                  const isPast = wNum < currentWeek
+                  const weekData = weeksData.find(w => w.weekNumber === wNum)
+                  
+                  // Get trimester details for color coding
+                  let trimColor = "border-primary bg-primary"
+                  let lineColor = "bg-primary/20"
+                  let badgeColor = "bg-primary/10 text-primary"
+                  
+                  if (wNum >= 14 && wNum <= 27) {
+                    trimColor = "border-[#ebb0c9] bg-[#ebb0c9]"
+                    lineColor = "bg-[#ebb0c9]/30"
+                    badgeColor = "bg-[#ebb0c9]/15 text-[#b26989]"
+                  } else if (wNum >= 28) {
+                    trimColor = "border-[#92c2a0] bg-[#92c2a0]"
+                    lineColor = "bg-[#92c2a0]/30"
+                    badgeColor = "bg-[#92c2a0]/15 text-[#5c8266]"
+                  }
 
-                        return (
-                          <Link 
-                            key={wNum} 
-                            to={`/week/${wNum}`}
-                            className={btnClass}
-                            title={`Go to Week ${wNum}`}
-                          >
-                            {wNum}
-                          </Link>
-                        )
-                      })}
+                  return (
+                    <div key={wNum} className="relative flex items-start group">
+                      {/* Vertical line connecting entries */}
+                      {index < displayedWeeks.length - 1 && (
+                        <div className={`absolute left-[-17px] top-5 w-[2px] h-[calc(100%+20px)] ${lineColor} z-0`}></div>
+                      )}
+                      
+                      {/* Timeline Dot */}
+                      <div 
+                        className={`absolute left-[-22px] top-1.5 w-3 h-3 rounded-full border-2 z-10 transition-all duration-300 ${
+                          isCurrent 
+                            ? `${trimColor} scale-125 ring-4 ring-offset-2 ring-primary/20 pulse-active` 
+                            : isPast 
+                              ? `${trimColor} opacity-70` 
+                              : `border-neutral/30 bg-white`
+                        }`}
+                      ></div>
+                      
+                      {/* Timeline content on the right */}
+                      <Link 
+                        to={`/week/${wNum}`}
+                        className={`flex-1 p-3 rounded-xl border transition-all duration-200 text-left w-full block hover:scale-[1.01] ${
+                          isCurrent 
+                            ? 'bg-primary/5 border-primary/20 shadow-sm' 
+                            : 'bg-[#faf7f2]/50 border-transparent hover:border-[#f2edd6]'
+                        }`}
+                      >
+                        <div className="flex justify-between items-center">
+                          <span className={`text-xs font-bold font-display ${isCurrent ? 'text-primary text-sm' : 'text-neutral/80'}`}>
+                            Week {wNum} {isCurrent && '• Today'}
+                          </span>
+                          {weekData && (
+                            <span className={`text-[9px] font-bold py-0.5 px-2 rounded-full ${badgeColor}`}>
+                              {weekData.sizeComparison}
+                            </span>
+                          )}
+                        </div>
+                        {weekData && (
+                          <p className="text-[11px] text-neutral/60 font-semibold mt-1 truncate">
+                            {weekData.highlights[0]}
+                          </p>
+                        )}
+                      </Link>
                     </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             </div>
           </div>
