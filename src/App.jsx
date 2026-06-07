@@ -44,34 +44,34 @@ function AppContent() {
       {/* Navigation Header */}
       <header className="w-full sticky top-0 z-50 bg-[#ffffff]/90 backdrop-blur-md border-b border-[#f2edd6]/80 shadow-sm transition-all duration-300">
         <div className="navbar max-w-6xl mx-auto w-full px-4 md:px-6 py-2 flex items-center justify-between">
-          <div className="flex-1 flex items-center gap-1 md:gap-2">
-            <Link to="/" className="text-2xl font-display font-black tracking-tight text-primary flex items-center gap-1.5 min-h-[48px] px-2 rounded-xl hover:bg-[#faf7f2]/50 transition-colors shrink-0">
+          <div className="flex-grow flex items-center">
+            <Link to="/" className="text-2xl font-display font-black tracking-tight text-primary flex items-center gap-1.5 min-h-[48px] px-2 rounded-xl hover:bg-[#faf7f2]/50 transition-colors">
               👶 Bump Buddy
             </Link>
-            
-            <div className="text-sm breadcrumbs font-bold text-neutral">
-              <ul>
-                <li>
-                  {isWeekPage ? (
-                    <Link to="/" className="text-neutral/50 hover:text-primary transition-colors">
-                      Dashboard
-                    </Link>
-                  ) : (
-                    <span className="text-neutral/50">Dashboard</span>
-                  )}
-                </li>
-                {isWeekPage && (
-                  <li>
-                    <span className="text-primary font-black">
-                      Week {weekNum} Journal
-                    </span>
-                  </li>
-                )}
-              </ul>
-            </div>
           </div>
           
-          <div className="flex-none flex items-center gap-3">
+          <div className="flex-none flex items-center gap-4">
+            {isWeekPage ? (
+              <div className="breadcrumbs text-xs font-semibold text-neutral/60 hidden sm:block">
+                <ul>
+                  <li>
+                    <Link to="/" className="hover:text-primary transition-colors font-display font-bold">
+                      Dashboard
+                    </Link>
+                  </li>
+                  <li className="font-display font-black text-primary">
+                    Week {weekNum} Journal
+                  </li>
+                </ul>
+              </div>
+            ) : (
+              <div className="breadcrumbs text-xs font-semibold text-neutral/40 hidden sm:block">
+                <ul>
+                  <li className="font-display font-black">Dashboard</li>
+                </ul>
+              </div>
+            )}
+            
             {/* Settings Gear Button */}
             <button 
               onClick={() => setIsSettingsOpen(true)}

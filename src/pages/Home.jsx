@@ -116,72 +116,7 @@ export default function Home() {
       {/* Combined Dashboard Main Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         
-        {/* Left Column: Timeline Summary & Week Navigator */}
-        <div className="lg:col-span-4 flex flex-col gap-6">
-          
-          {/* Due Date & Pregnancy Timeline Card */}
-          <div className="notebook-card p-6 flex flex-col justify-center text-center bg-white border border-[#f2edd6]/85">
-            <h3 className="text-[10px] uppercase font-extrabold text-neutral/50 tracking-wider">Pregnancy Timeline</h3>
-            <div className="mt-1.5">
-              <p className="text-xs text-neutral/60 font-bold">Estimated Due Date (EDD)</p>
-              <h4 className="text-2xl font-display font-black text-primary mt-0.5">{formattedBirthDate()}</h4>
-            </div>
-            <div className="badge bg-[#ebb0c9] text-secondary-content font-bold border-none py-2 px-4.5 mx-auto mt-2.5 text-xs shadow-sm rounded-full">
-              Due in {40 - currentWeek} Weeks
-            </div>
-          </div>
-
-          {/* Timeline Browser */}
-          <div className="notebook-card w-full p-5 bg-white border border-[#f2edd6]/85 flex flex-col justify-between">
-            <div>
-              <div className="border-b border-[#f2edd6]/60 pb-2.5">
-                <h3 className="text-sm font-display font-extrabold text-primary flex items-center gap-1.5">
-                  🗺️ Timeline Browser
-                </h3>
-              </div>
-              
-              <div className="flex flex-col gap-4 mt-3">
-                {trimesters.map((t) => (
-                  <div key={t.name} className="flex flex-col gap-1.5">
-                    <div className="flex justify-between items-center px-1">
-                      <span className="text-[10px] font-extrabold text-neutral">{t.name}</span>
-                      <span className="text-[8px] font-bold text-gray-400 uppercase tracking-widest">{t.description}</span>
-                    </div>
-                    <div className="grid grid-cols-7 gap-1">
-                      {t.weeks.map((wNum) => {
-                        const isActive = wNum === currentWeek
-                        const isPast = wNum < currentWeek
-                        
-                        let btnClass = "btn btn-xs h-7 min-h-[28px] w-full text-[10px] font-bold transition-all duration-200 p-0 rounded-full "
-                        if (isActive) {
-                          btnClass += "btn-primary shadow-sm pulse-active text-white border-none"
-                        } else if (isPast) {
-                          btnClass += "bg-primary/10 border-transparent text-primary hover:bg-primary/20"
-                        } else {
-                          btnClass += "bg-[#faf7f2] border border-[#f2edd6]/60 text-neutral/70 hover:bg-[#ebdccb]/30"
-                        }
-
-                        return (
-                          <Link 
-                            key={wNum} 
-                            to={`/week/${wNum}`}
-                            className={btnClass}
-                            title={`Go to Week ${wNum}`}
-                          >
-                            {wNum}
-                          </Link>
-                        )
-                      })}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Right Column: Active Week Spotlight Card (Primary Focus) */}
+        {/* Left Column: Active Week Spotlight Card (Primary Focus) */}
         <div className="lg:col-span-8 flex flex-col gap-6">
           
           {activeWeekData && (
@@ -272,6 +207,71 @@ export default function Home() {
               </div>
             </div>
           )}
+
+        </div>
+
+        {/* Right Column: Timeline Summary & Week Navigator (No reset button here anymore) */}
+        <div className="lg:col-span-4 flex flex-col gap-6">
+          
+          {/* Due Date & Pregnancy Timeline Card */}
+          <div className="notebook-card p-6 flex flex-col justify-center text-center bg-white border border-[#f2edd6]/85">
+            <h3 className="text-[10px] uppercase font-extrabold text-neutral/50 tracking-wider">Pregnancy Timeline</h3>
+            <div className="mt-1.5">
+              <p className="text-xs text-neutral/60 font-bold">Estimated Due Date (EDD)</p>
+              <h4 className="text-2xl font-display font-black text-primary mt-0.5">{formattedBirthDate()}</h4>
+            </div>
+            <div className="badge bg-[#ebb0c9] text-secondary-content font-bold border-none py-2 px-4.5 mx-auto mt-2.5 text-xs shadow-sm rounded-full">
+              Due in {40 - currentWeek} Weeks
+            </div>
+          </div>
+
+          {/* Timeline Browser */}
+          <div className="notebook-card w-full p-5 bg-white border border-[#f2edd6]/85 flex flex-col justify-between">
+            <div>
+              <div className="border-b border-[#f2edd6]/60 pb-2.5">
+                <h3 className="text-sm font-display font-extrabold text-primary flex items-center gap-1.5">
+                  🗺️ Timeline Browser
+                </h3>
+              </div>
+              
+              <div className="flex flex-col gap-4 mt-3">
+                {trimesters.map((t) => (
+                  <div key={t.name} className="flex flex-col gap-1.5">
+                    <div className="flex justify-between items-center px-1">
+                      <span className="text-[10px] font-extrabold text-neutral">{t.name}</span>
+                      <span className="text-[8px] font-bold text-gray-400 uppercase tracking-widest">{t.description}</span>
+                    </div>
+                    <div className="grid grid-cols-7 gap-1">
+                      {t.weeks.map((wNum) => {
+                        const isActive = wNum === currentWeek
+                        const isPast = wNum < currentWeek
+                        
+                        let btnClass = "btn btn-xs h-7 min-h-[28px] w-full text-[10px] font-bold transition-all duration-200 p-0 rounded-full "
+                        if (isActive) {
+                          btnClass += "btn-primary shadow-sm pulse-active text-white border-none"
+                        } else if (isPast) {
+                          btnClass += "bg-primary/10 border-transparent text-primary hover:bg-primary/20"
+                        } else {
+                          btnClass += "bg-[#faf7f2] border border-[#f2edd6]/60 text-neutral/70 hover:bg-[#ebdccb]/30"
+                        }
+
+                        return (
+                          <Link 
+                            key={wNum} 
+                            to={`/week/${wNum}`}
+                            className={btnClass}
+                            title={`Go to Week ${wNum}`}
+                          >
+                            {wNum}
+                          </Link>
+                        )
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
 
         </div>
 
