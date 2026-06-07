@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { calculateArrivalDate, calculateCurrentWeek } from '../utils/pregnancy'
 import cozyPregnancyHero from '../assets/cozy_pregnancy_hero.png'
+import Icon from './Icon'
 
 const LOADING_STEPS = [
-  { text: "Analyzing your Last Menstrual Period...", icon: "📅" },
-  { text: "Applying Naegele's Rule for calculation...", icon: "🧮" },
-  { text: "Determining Estimated Due Date (EDD)...", icon: "⏳" },
-  { text: "Tailoring weekly baby growth comparisons...", icon: "🍓" },
-  { text: "Configuring customized checklist templates...", icon: "📋" },
-  { text: "Almost ready! Preparing dashboard...", icon: "✨" }
+  { text: "Analyzing your Last Menstrual Period...", icon: "calendar" },
+  { text: "Applying Naegele's Rule for calculation...", icon: "calculator" },
+  { text: "Determining Estimated Due Date (EDD)...", icon: "hourglass" },
+  { text: "Tailoring weekly baby growth comparisons...", icon: "scale" },
+  { text: "Configuring customized checklist templates...", icon: "clipboard" },
+  { text: "Almost ready! Preparing dashboard...", icon: "sparkles" }
 ]
+
 
 export default function OnboardingWizard({ onComplete }) {
   const [step, setStep] = useState(1)
@@ -86,8 +88,8 @@ export default function OnboardingWizard({ onComplete }) {
         {/* Left Side Presentation Panel (Desktop only) */}
         <div className="hidden lg:flex lg:col-span-5 bg-gradient-to-br from-primary/5 to-secondary/5 text-neutral p-8 flex-col justify-between relative overflow-hidden border-r border-[#f2edd6]/60">
           <div className="z-10">
-            <span className="text-xs uppercase font-extrabold tracking-widest text-primary bg-primary/10 px-3 py-1.5 rounded-full">
-              🌸 Your Companion
+            <span className="text-xs uppercase font-extrabold tracking-widest text-primary bg-primary/10 px-3 py-1.5 rounded-full inline-flex items-center gap-1.5">
+              <Icon name="flower" size={14} className="text-primary" /> Your Companion
             </span>
             <h2 className="text-3xl font-display font-black mt-5 leading-tight text-primary">Bump Buddy</h2>
             <p className="text-sm text-neutral/75 mt-2 leading-relaxed font-semibold">
@@ -108,8 +110,8 @@ export default function OnboardingWizard({ onComplete }) {
           </div>
           
           <div className="z-10 pt-4 border-t border-[#f2edd6]/80">
-            <p className="text-[11px] text-neutral/50 font-bold leading-relaxed">
-              👶 Bump Buddy guides expecting parents from week 1 through week 40. No data ever leaves your device.
+            <p className="text-[11px] text-neutral/50 font-bold leading-relaxed flex items-center gap-1.5">
+              <Icon name="baby" size={14} className="text-primary shrink-0" /> Bump Buddy guides expecting parents from week 1 through week 40. No data ever leaves your device.
             </p>
           </div>
         </div>
@@ -169,7 +171,7 @@ export default function OnboardingWizard({ onComplete }) {
                   max={new Date().toISOString().slice(0, 10)}
                   className="custom-input w-full h-12 min-h-[48px]"
                 />
-                {error && <span className="text-xs text-error mt-2 font-bold">⚠️ {error}</span>}
+                {error && <span className="text-xs text-error mt-2 font-bold flex items-center gap-1.5"><Icon name="warning" size={14} className="text-error" /> {error}</span>}
               </div>
               <div className="flex justify-between gap-4 mt-6">
                 <button onClick={handleBack} className="btn btn-ghost flex-1 h-12 min-h-[48px] font-bold">Back</button>
@@ -186,11 +188,11 @@ export default function OnboardingWizard({ onComplete }) {
               <div className="relative w-24 h-24 flex items-center justify-center">
                 <div className="absolute w-20 h-20 border-4 border-primary/10 border-t-primary rounded-full animate-spin"></div>
                 <span 
-                  className={`text-4xl transition-all duration-200 transform ${
+                  className={`transition-all duration-200 transform ${
                     isTransitioning ? 'opacity-0 blur-sm scale-90' : 'opacity-100 blur-0 scale-100'
                   }`}
                 >
-                  {LOADING_STEPS[currentStepIndex].icon}
+                  <Icon name={LOADING_STEPS[currentStepIndex].icon} size={36} className="text-primary" />
                 </span>
               </div>
 
