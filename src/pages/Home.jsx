@@ -246,7 +246,7 @@ export default function Home() {
               </div>
               
               {/* Vertical Timeline Container */}
-              <div className="relative pl-6 flex flex-col gap-5 mt-2">
+              <ul className="timeline timeline-vertical timeline-compact w-full mt-2">
                 {displayedWeeks.map((wNum, index) => {
                   const isCurrent = wNum === currentWeek
                   const isPast = wNum < currentWeek
@@ -268,33 +268,32 @@ export default function Home() {
                   }
 
                   return (
-                    <div key={wNum} className="relative flex items-start group">
-                      {/* Vertical line connecting entries */}
-                      {index < displayedWeeks.length - 1 && (
-                        <div className={`absolute left-[-17px] top-5 w-[2px] h-[calc(100%+20px)] ${lineColor} z-0`}></div>
-                      )}
+                    <li key={wNum} className="w-full">
+                      {index > 0 && <hr className={`${lineColor}`} />}
                       
                       {/* Timeline Dot */}
-                      <div 
-                        className={`absolute left-[-22px] top-1.5 w-3 h-3 rounded-full border-2 z-10 transition-all duration-300 ${
-                          isCurrent 
-                            ? `${trimColor} scale-125 ring-4 ring-offset-2 ring-primary/20 pulse-active` 
-                            : isPast 
-                              ? `${trimColor} opacity-70` 
-                              : `border-neutral/30 bg-white`
-                        }`}
-                      ></div>
+                      <div className="timeline-middle">
+                        <div 
+                          className={`w-3 h-3 rounded-full border-2 transition-all duration-300 ${
+                            isCurrent 
+                              ? `${trimColor} scale-125 ring-4 ring-offset-2 ring-primary/20 pulse-active` 
+                              : isPast 
+                                ? `${trimColor} opacity-70` 
+                                : `border-neutral/30 bg-white`
+                          }`}
+                        ></div>
+                      </div>
                       
                       {/* Timeline content on the right */}
-                      <Link 
-                        to={`/week/${wNum}`}
-                        className={`flex-1 p-3 rounded-xl border transition-all duration-200 text-left w-full block hover:scale-[1.01] ${
-                          isCurrent 
-                            ? 'bg-primary/5 border-primary/20 shadow-sm' 
-                            : 'bg-[#faf7f2]/50 border-transparent hover:border-[#f2edd6]'
-                        }`}
-                      >
-                        <div className="flex justify-between items-center">
+                      <div className="timeline-end w-full pl-2">
+                        <Link 
+                          to={`/week/${wNum}`}
+                          className={`flex justify-between items-center p-3 rounded-xl border transition-all duration-200 text-left w-full hover:scale-[1.01] ${
+                            isCurrent 
+                              ? 'bg-primary/5 border-primary/20 shadow-sm' 
+                              : 'bg-[#faf7f2]/50 border-transparent hover:border-[#f2edd6]'
+                          }`}
+                        >
                           <span className={`text-xs font-bold font-display ${isCurrent ? 'text-primary text-sm' : 'text-neutral/80'}`}>
                             Week {wNum} {isCurrent && '• Today'}
                           </span>
@@ -303,12 +302,14 @@ export default function Home() {
                               {weekData.sizeComparison}
                             </span>
                           )}
-                        </div>
-                      </Link>
-                    </div>
+                        </Link>
+                      </div>
+                      
+                      {index < displayedWeeks.length - 1 && <hr className={`${lineColor}`} />}
+                    </li>
                   )
                 })}
-              </div>
+              </ul>
             </div>
           </div>
 
